@@ -36,7 +36,30 @@
         </header>
         <section class="quote-section">
             <div class="container">
-                <form class="quote-form" id="quoteForm" action="https://formspree.io/f/your-form-id" method="POST">
+                <form class="quote-form" id="quoteForm">
+                    <div class="form-group">
+                        <label for="serviceType">What kind of service are you looking for? *</label>
+                        <select id="serviceType" name="serviceType" required>
+                            <option value="">Select a service</option>
+                            <option value="bar-services">Bar at your event</option>
+                            <option value="cocktail-workshop">Cocktail Workshop</option>
+                        </select>
+                    </div>
+
+                    <!-- Hidden by default, shown only if bar services is selected -->
+                    <div class="form-group hidden" id="eventTypeContainer">
+                        <label for="eventType">What kind of event is this? *</label>
+                        <select id="eventType" name="eventType">
+                            <option value="">Select an event type</option>
+                            <option value="Wedding">Wedding</option>
+                            <option value="Bar/Bat Mitzvah">Bar/Bat Mitzvah</option>
+                            <option value="Corporate Event">Corporate Event</option>
+                            <option value="Private Party">Private Party</option>
+                            <option value="Holiday Celebration">Holiday Celebration</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="name">Your Name *</label>
                         <input type="text" id="name" name="name" required placeholder="John Doe">
@@ -49,18 +72,7 @@
                         <label for="phone">Phone Number</label>
                         <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
                     </div>
-                    <div class="form-group">
-                        <label for="eventType">Event Type *</label>
-                        <select id="eventType" name="eventType" required>
-                            <option value="">Select an event type</option>
-                            <option value="wedding">Wedding</option>
-                            <option value="bar-mitzvah">Bar/Bat Mitzvah</option>
-                            <option value="corporate">Corporate Event</option>
-                            <option value="private-party">Private Party</option>
-                            <option value="holiday">Holiday Celebration</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
+
                     <div class="form-group">
                         <label for="eventDate">Event Date *</label>
                         <input type="date" id="eventDate" name="eventDate" required>
@@ -78,7 +90,8 @@
                         <textarea id="message" name="message"
                             placeholder="Share any details about your event, special requests, or questions..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                    <div id="formStatus" class="form-status"></div>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Submit Request</button>
                 </form>
             </div>
         </section>

@@ -791,6 +791,31 @@ h6 {
     margin-bottom: var(--spacing-xl);
 }
 
+/* Utility classes */
+.hidden {
+    display: none;
+}
+
+.form-status {
+    margin: var(--spacing-sm) 0;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-md);
+    text-align: center;
+    font-weight: 500;
+}
+
+.form-status.success {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+.form-status.error {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
 .pesach-category h2 {
     font-size: 1.5rem;
     color: var(--color-accent);
