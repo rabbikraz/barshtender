@@ -10,5 +10,6 @@ CREATE TABLE quotes (
   guest_count INTEGER,
   location TEXT,
   message TEXT,
-  created_at TEXT
+  created_at TEXT,
+  status TEXT DEFAULT 'new'
 );

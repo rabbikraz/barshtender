@@ -9,341 +9,610 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2d3a5c;
+            --secondary: #b8ccb2;
+            --bg: #f3f4f6;
+            --white: #ffffff;
+            --text-dark: #111827;
+            --text-gray: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            background-color: #f3f4f6;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
         }
 
         /* Login Styles */
-        .login-container {
-            min-height: 100vh;
+        #loginScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            z-index: 1000;
         }
 
         .login-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
             width: 100%;
             max-width: 400px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         .login-title {
             text-align: center;
-            margin-bottom: 2rem;
-            color: var(--color-text-primary);
-        }
-
-        /* Dashboard Styles */
-        .dashboard-container {
-            display: none;
-            /* Hidden by default */
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
             margin-bottom: 2rem;
         }
 
-        .dashboard-header h1 {
-            font-size: 1.5rem;
-        }
-
-        .logout-btn {
-            background: transparent;
-            border: 1px solid #dc3545;
-            color: #dc3545;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .quotes-list {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .quote-item {
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .quote-summary {
-            padding: 1rem;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr auto;
-            align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .quote-summary:hover {
-            background-color: #f9fafb;
-        }
-
-        .quote-summary.read {
-            background-color: #ffffff;
-        }
-
-        .quote-summary.unread {
-            background-color: #ecfdf5;
-            /* Light green tint for unread */
-            font-weight: 600;
-        }
-
-        .customer-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .customer-name {
-            font-weight: 600;
-            color: var(--color-text-primary);
-        }
-
-        .customer-email {
-            font-size: 0.875rem;
-            color: var(--color-text-secondary);
-        }
-
-        .quote-details {
-            display: none;
-            padding: 1.5rem;
-            background-color: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .quote-details.open {
-            display: block;
-        }
-
-        .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+        .input-group {
             margin-bottom: 1.5rem;
         }
 
-        .detail-item label {
+        .input-group label {
             display: block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: #6b7280;
-            margin-bottom: 0.25rem;
-        }
-
-        .detail-item span {
-            color: #111827;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
             font-weight: 500;
+            color: var(--text-dark);
         }
 
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #1f2937;
+        }
+
+        /* Dashboard Layout */
+        .sidebar {
+            width: 250px;
+            background: var(--primary);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Queue List */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
             font-weight: 600;
         }
 
-        .badge-type {
-            background-color: #e0e7ff;
-            color: #3730a3;
+        .quote-card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.2s;
         }
 
-        .chevron {
-            transition: transform 0.2s;
+        .quote-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
         }
 
-        .rotate-180 {
-            transform: rotate(180deg);
+        .quote-header {
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .quote-main-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--secondary);
+        }
+
+        .status-dot.new {
+            background: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .status-dot.contacted {
+            background: #f59e0b;
+        }
+
+        .status-dot.booked {
+            background: #10b981;
+        }
+
+        .status-dot.archived {
+            background: #9ca3af;
+        }
+
+        .client-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .service-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            background: #f3f4f6;
+            color: var(--text-gray);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .bar-service {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .workshop-service {
+            background: #fae8ff;
+            color: #86198f;
+        }
+
+        .quote-date {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .quote-expanded {
+            display: none;
+            padding: 1.5rem;
+            background: #f9fafb;
+            border-top: 1px solid var(--border);
+        }
+
+        .quote-expanded.open {
+            display: block;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .detail-group p {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .message-box {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--white);
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .btn-contact {
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .btn-contact:hover {
+            background: #fffbeb;
+        }
+
+        .btn-book {
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-book:hover {
+            background: #ecfdf5;
+        }
+
+        .btn-archive {
+            color: var(--text-gray);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Loader */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid var(--primary);
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Login Screen -->
-    <div id="loginScreen" class="login-container">
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen">
         <div class="login-box">
-            <h2 class="login-title">Admin Login</h2>
+            <h1 class="login-title">Barshtender</h1>
             <form id="loginForm">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" name="username" required>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
                 </div>
-                <div id="loginError" class="form-status error hidden"></div>
-                <button type="submit" class="btn btn-primary" style="width: 100%">Login</button>
+                <div id="loginError" style="color: red; text-align: center; margin-bottom: 1rem;" class="hidden"></div>
+                <button type="submit" class="btn">Access Admin Panel</button>
             </form>
         </div>
     </div>
 
-    <!-- Dashboard Screen -->
-    <div id="dashboardScreen" class="dashboard-container">
-        <header class="dashboard-header">
-            <h1>Quote Requests</h1>
-            <button id="logoutBtn" class="logout-btn">Logout</button>
-        </header>
+    <!-- MAIN DASHBOARD -->
+    <div id="dashboard" class="hidden" style="display: flex; width: 100%;">
+        <nav class="sidebar">
+            <div class="brand">
+                <span>🍸 BARSHTENDER</span>
+            </div>
+            <a class="nav-item active">Dashboard</a>
+            <a class="nav-item" href="https://barshtender.com" target="_blank">View Website</a>
+            <div style="flex: 1"></div>
+            <a class="nav-item" id="logoutBtn">Logout</a>
+        </nav>
 
-        <div id="loading" class="hidden" style="text-align: center; padding: 2rem;">Loading quotes...</div>
+        <main class="main-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Requests</div>
+                    <div class="stat-value" id="statTotal">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value" id="statPending">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">This Month</div>
+                    <div class="stat-value" id="statMonth">-</div>
+                </div>
+            </div>
 
-        <div id="quotesList" class="quotes-list">
-            <!-- Quotes will be injected here -->
-        </div>
+            <div class="section-header">
+                <h2 class="section-title">Recent Inquiries</h2>
+                <div style="font-size: 0.875rem; color: var(--text-gray);">Live Database View</div>
+            </div>
+
+            <div id="loading" class="loader hidden"></div>
+            <div id="quotesList"></div>
+        </main>
     </div>
 
     <script>
-        const loginScreen = document.getElementById('loginScreen');
-        const dashboardScreen = document.getElementById('dashboardScreen');
-        const loginForm = document.getElementById('loginForm');
-        const quotesList = document.getElementById('quotesList');
-        const loginError = document.getElementById('loginError');
+        // State
+        let quotes = [];
 
-        // Check if logged in (simple local check for persistent UI state, real auth is on API)
-        const token = sessionStorage.getItem('adminToken');
-        if (token) {
+        // Auth Check
+        if (sessionStorage.getItem('adminToken')) {
             showDashboard();
         }
 
-        loginForm.addEventListener('submit', async (e) => {
+        // Login Logic
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-
+            const form = new FormData(e.target);
             try {
                 const res = await fetch('/api/admin/login', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(Object.fromEntries(form)),
+                    headers: { 'Content-Type': 'application/json' }
                 });
-
                 if (res.ok) {
-                    const result = await res.json();
-                    sessionStorage.setItem('adminToken', 'true'); // Just a flag, auth is handled by HttpOnly cookie
+                    sessionStorage.setItem('adminToken', 'true');
                     showDashboard();
                 } else {
-                    loginError.textContent = 'Invalid credentials';
-                    loginError.classList.remove('hidden');
+                    document.getElementById('loginError').textContent = 'Invalid credentials';
+                    document.getElementById('loginError').classList.remove('hidden');
                 }
             } catch (err) {
-                loginError.textContent = 'Login failed';
-                loginError.classList.remove('hidden');
+                console.error(err);
             }
         });
 
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-            await fetch('/api/admin/logout', { method: 'POST' });
+        document.getElementById('logoutBtn').addEventListener('click', () => {
             sessionStorage.removeItem('adminToken');
             location.reload();
         });
 
         function showDashboard() {
-            loginScreen.style.display = 'none';
-            dashboardScreen.style.display = 'block';
-            loadQuotes();
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            fetchQuotes();
         }
 
-        async function loadQuotes() {
+        async function fetchQuotes() {
             document.getElementById('loading').classList.remove('hidden');
             try {
                 const res = await fetch('/api/admin/quotes');
-                if (res.status === 401) {
-                    // Session expired
-                    sessionStorage.removeItem('adminToken');
-                    location.reload();
-                    return;
-                }
-
-                const quotes = await res.json();
-                renderQuotes(quotes);
+                quotes = await res.json();
+                renderQuotes();
+                updateStats();
             } catch (err) {
-                console.error('Failed to load quotes', err);
-                quotesList.innerHTML = '<div style="padding: 2rem; text-align: center; color: red;">Failed to load quotes. Is the database set up?</div>';
+                document.getElementById('quotesList').innerHTML = `<p style="color:red">Failed to load quotes. Ensure DB is bound.</p>`;
             } finally {
                 document.getElementById('loading').classList.add('hidden');
             }
         }
 
-        function renderQuotes(quotes) {
-            if (!quotes || quotes.length === 0) {
-                quotesList.innerHTML = '<div style="padding: 2rem; text-align: center;">No quote requests found.</div>';
+        async function updateStatus(id, newStatus) {
+            try {
+                const res = await fetch('/api/admin/update_status', {
+                    method: 'POST',
+                    body: JSON.stringify({ id, status: newStatus }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (res.ok) {
+                    // Optimistic update
+                    const quote = quotes.find(q => q.id === id);
+                    if (quote) quote.status = newStatus;
+                    renderQuotes();
+                    updateStats();
+                }
+            } catch (err) {
+                alert('Failed to update status');
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').innerText = quotes.length;
+            document.getElementById('statPending').innerText = quotes.filter(q => !q.status || q.status === 'new').length;
+
+            // Simple month check
+            const now = new Date();
+            const thisMonth = quotes.filter(q => {
+                const d = new Date(q.created_at);
+                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+            }).length;
+            document.getElementById('statMonth').innerText = thisMonth;
+        }
+
+        function renderQuotes() {
+            const list = document.getElementById('quotesList');
+            if (quotes.length === 0) {
+                list.innerHTML = '<div style="text-align:center; padding: 2rem; color: #666;">No requests yet.</div>';
                 return;
             }
 
-            quotesList.innerHTML = quotes.map((quote, index) => {
-                const date = new Date(quote.created_at || Date.now()).toLocaleDateString();
-                const eventDate = new Date(quote.event_date).toLocaleDateString();
+            list.innerHTML = quotes.map(q => {
+                const status = q.status || 'new';
+                const serviceClass = q.service_type === 'bar-services' ? 'bar-service' : 'workshop-service';
+                const serviceLabel = q.service_type === 'bar-services' ? 'Bar Services' : 'Workshop';
 
                 return `
-                <div class="quote-item">
-                    <div class="quote-summary" onclick="toggleDetails(${index})">
-                        <div class="customer-info">
-                            <span class="customer-name">${quote.name}</span>
-                            <span class="customer-email">${quote.email}</span>
+                <div class="quote-card">
+                    <div class="quote-header" onclick="this.parentElement.querySelector('.quote-expanded').classList.toggle('open')">
+                        <div class="quote-main-info">
+                            <div class="status-dot ${status}" title="${status}"></div>
+                            <div>
+                                <div class="client-name">${q.name}</div>
+                                <div style="font-size:0.8rem; color:#666">${q.email}</div>
+                            </div>
+                            <span class="service-badge ${serviceClass}">${serviceLabel}</span>
                         </div>
-                        <span class="badge badge-type">${quote.service_type === 'bar-services' ? 'Bar' : 'Workshop'}</span>
-                        <span>${eventDate}</span>
-                        <span>${quote.guest_count || '?'} guests</span>
-                        <svg class="chevron" id="chevron-${index}" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
+                        <div class="quote-date">${new Date(q.created_at).toLocaleDateString()}</div>
                     </div>
-                    <div id="details-${index}" class="quote-details">
-                        <div class="detail-grid">
-                            <div class="detail-item">
+                    
+                    <div class="quote-expanded">
+                        <div class="details-grid">
+                            <div class="detail-group">
                                 <label>Phone</label>
-                                <span>${quote.phone || 'N/A'}</span>
+                                <p>${q.phone || '-'}</p>
                             </div>
-                            <div class="detail-item">
+                            <div class="detail-group">
+                                <label>Event Date</label>
+                                <p>${q.event_date}</p>
+                            </div>
+                            <div class="detail-group">
+                                <label>Guests</label>
+                                <p>${q.guest_count || '-'}</p>
+                            </div>
+                            <div class="detail-group">
                                 <label>Event Type</label>
-                                <span>${quote.event_type || 'N/A'}</span>
+                                <p>${q.event_type || '-'}</p>
                             </div>
-                            <div class="detail-item">
+                            <div class="detail-group">
                                 <label>Location</label>
-                                <span>${quote.location || 'N/A'}</span>
+                                <p>${q.location || '-'}</p>
                             </div>
-                            <div class="detail-item">
-                                <label>Submitted On</label>
-                                <span>${date}</span>
+                             <div class="detail-group">
+                                <label>Status</label>
+                                <p style="text-transform: capitalize;">${status}</p>
                             </div>
                         </div>
-                        <div class="detail-item">
-                             <label>Message</label>
-                             <p style="background: white; padding: 1rem; border-radius: 4px; border: 1px solid #e5e7eb; white-space: pre-wrap;">${quote.message || 'No message provided.'}</p>
+
+                        <div class="detail-group">
+                            <label>Message</label>
+                            <div class="message-box">${q.message || 'No message provided.'}</div>
+                        </div>
+
+                        <div class="action-bar">
+                            <button class="action-btn" onclick="updateStatus('${q.id}', 'new')">Mark New</button>
+                            <button class="action-btn btn-contact" onclick="updateStatus('${q.id}', 'contacted')">Mark Contacted</button>
+                            <button class="action-btn btn-book" onclick="updateStatus('${q.id}', 'booked')">Mark Booked</button>
+                            <button class="action-btn btn-archive" onclick="updateStatus('${q.id}', 'archived')">Archive</button>
                         </div>
                     </div>
                 </div>
                 `;
             }).join('');
-        }
-
-        window.toggleDetails = function (index) {
-            const details = document.getElementById(`details-${index}`);
-            const chevron = document.getElementById(`chevron-${index}`);
-
-            if (details.style.display === 'block') {
-                details.style.display = 'none';
-                chevron.classList.remove('rotate-180');
-            } else {
-                details.style.display = 'block';
-                chevron.classList.add('rotate-180');
-            }
         }
     </script>
 </body>
