@@ -10,6 +10,37 @@ export async function onRequestPost({ request, env }) {
             });
         }
 
+        // 0. Save to D1 Database (if available)
+        if (env.DB) {
+            try {
+                const id = crypto.randomUUID();
+                const createdAt = new Date().toISOString();
+
+                await env.DB.prepare(`
+          INSERT INTO quotes (id, service_type, event_type, name, email, phone, event_date, guest_count, location, message, created_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `).bind(
+                    id,
+                    data.serviceType,
+                    data.eventType || null,
+                    data.name,
+                    data.email,
+                    data.phone || null,
+                    data.eventDate,
+                    data.guestCount || null,
+                    data.location || null,
+                    data.message || null,
+                    createdAt
+                ).run();
+
+            } catch (dbErr) {
+                console.error("Failed to save to D1 database:", dbErr);
+                // Continue execution to send email even if DB fails
+            }
+        } else {
+            console.warn("DB binding not found. Skipping database save.");
+        }
+
         // 1. Send Email to Admin (Barshtender)
         const adminEmailContent = `
       New quote request received:

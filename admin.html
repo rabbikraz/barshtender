@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Barshtender Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #f3f4f6;
+            min-height: 100vh;
+        }
+
+        /* Login Styles */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--color-text-primary);
+        }
+
+        /* Dashboard Styles */
+        .dashboard-container {
+            display: none;
+            /* Hidden by default */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .quotes-list {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .quote-item {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .quote-summary {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .quote-summary:hover {
+            background-color: #f9fafb;
+        }
+
+        .quote-summary.read {
+            background-color: #ffffff;
+        }
+
+        .quote-summary.unread {
+            background-color: #ecfdf5;
+            /* Light green tint for unread */
+            font-weight: 600;
+        }
+
+        .customer-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .customer-name {
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .customer-email {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        .quote-details {
+            display: none;
+            padding: 1.5rem;
+            background-color: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .quote-details.open {
+            display: block;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-item span {
+            color: #111827;
+            font-weight: 500;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-type {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .chevron {
+            transition: transform 0.2s;
+        }
+
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <h2 class="login-title">Admin Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div id="loginError" class="form-status error hidden"></div>
+                <button type="submit" class="btn btn-primary" style="width: 100%">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboardScreen" class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>Quote Requests</h1>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </header>
+
+        <div id="loading" class="hidden" style="text-align: center; padding: 2rem;">Loading quotes...</div>
+
+        <div id="quotesList" class="quotes-list">
+            <!-- Quotes will be injected here -->
+        </div>
+    </div>
+
+    <script>
+        const loginScreen = document.getElementById('loginScreen');
+        const dashboardScreen = document.getElementById('dashboardScreen');
+        const loginForm = document.getElementById('loginForm');
+        const quotesList = document.getElementById('quotesList');
+        const loginError = document.getElementById('loginError');
+
+        // Check if logged in (simple local check for persistent UI state, real auth is on API)
+        const token = sessionStorage.getItem('adminToken');
+        if (token) {
+            showDashboard();
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    const result = await res.json();
+                    sessionStorage.setItem('adminToken', 'true'); // Just a flag, auth is handled by HttpOnly cookie
+                    showDashboard();
+                } else {
+                    loginError.textContent = 'Invalid credentials';
+                    loginError.classList.remove('hidden');
+                }
+            } catch (err) {
+                loginError.textContent = 'Login failed';
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch('/api/admin/logout', { method: 'POST' });
+            sessionStorage.removeItem('adminToken');
+            location.reload();
+        });
+
+        function showDashboard() {
+            loginScreen.style.display = 'none';
+            dashboardScreen.style.display = 'block';
+            loadQuotes();
+        }
+
+        async function loadQuotes() {
+            document.getElementById('loading').classList.remove('hidden');
+            try {
+                const res = await fetch('/api/admin/quotes');
+                if (res.status === 401) {
+                    // Session expired
+                    sessionStorage.removeItem('adminToken');
+                    location.reload();
+                    return;
+                }
+
+                const quotes = await res.json();
+                renderQuotes(quotes);
+            } catch (err) {
+                console.error('Failed to load quotes', err);
+                quotesList.innerHTML = '<div style="padding: 2rem; text-align: center; color: red;">Failed to load quotes. Is the database set up?</div>';
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        function renderQuotes(quotes) {
+            if (!quotes || quotes.length === 0) {
+                quotesList.innerHTML = '<div style="padding: 2rem; text-align: center;">No quote requests found.</div>';
+                return;
+            }
+
+            quotesList.innerHTML = quotes.map((quote, index) => {
+                const date = new Date(quote.created_at || Date.now()).toLocaleDateString();
+                const eventDate = new Date(quote.event_date).toLocaleDateString();
+
+                return `
+                <div class="quote-item">
+                    <div class="quote-summary" onclick="toggleDetails(${index})">
+                        <div class="customer-info">
+                            <span class="customer-name">${quote.name}</span>
+                            <span class="customer-email">${quote.email}</span>
+                        </div>
+                        <span class="badge badge-type">${quote.service_type === 'bar-services' ? 'Bar' : 'Workshop'}</span>
+                        <span>${eventDate}</span>
+                        <span>${quote.guest_count || '?'} guests</span>
+                        <svg class="chevron" id="chevron-${index}" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div id="details-${index}" class="quote-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <label>Phone</label>
+                                <span>${quote.phone || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Event Type</label>
+                                <span>${quote.event_type || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Location</label>
+                                <span>${quote.location || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Submitted On</label>
+                                <span>${date}</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                             <label>Message</label>
+                             <p style="background: white; padding: 1rem; border-radius: 4px; border: 1px solid #e5e7eb; white-space: pre-wrap;">${quote.message || 'No message provided.'}</p>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        window.toggleDetails = function (index) {
+            const details = document.getElementById(`details-${index}`);
+            const chevron = document.getElementById(`chevron-${index}`);
+
+            if (details.style.display === 'block') {
+                details.style.display = 'none';
+                chevron.classList.remove('rotate-180');
+            } else {
+                details.style.display = 'block';
+                chevron.classList.add('rotate-180');
+            }
+        }
+    </script>
+</body>
+
+</html>
