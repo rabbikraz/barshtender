@@ -141,11 +141,8 @@ if (quoteForm && serviceTypeSelect) {
             .then(async response => {
                 const result = await response.json();
                 if (response.ok) {
-                    // Hide Form
-                    quoteForm.style.display = 'none';
-
-                    // Show Success Message
-                    formStatus.innerHTML = `
+                    // Replace Form Content with Success Message (keeping the container styling)
+                    quoteForm.innerHTML = `
                         <div class="success-message">
                             <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Request Received!</h3>
                             <p style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 500;">Thank you so much for your quote request.</p>
@@ -154,8 +151,6 @@ if (quoteForm && serviceTypeSelect) {
                             <a href="index.html" class="btn btn-secondary" style="margin-top: 1.5rem; display: inline-block;">Return Home</a>
                         </div>
                     `;
-                    formStatus.className = 'form-status success';
-                    quoteForm.reset();
                 } else {
                     throw new Error(result.message || 'Submission failed');
                 }
