@@ -166,6 +166,46 @@ h6 {
     box-shadow: var(--shadow-sm);
 }
 
+/* Navbar Logo Animation */
+.nav-logo {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+}
+
+.navbar.scrolled .nav-logo {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Fix Autofill Background Color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+    -webkit-text-fill-color: var(--text-dark) !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Flatpickr Rounding */
+.flatpickr-calendar {
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+/* Form Success Message */
+.success-message {
+    text-align: center;
+    padding: 3rem;
+    background: #ecfdf5;
+    border-radius: 12px;
+    border: 1px solid #10b981;
+    color: #065f46;
+}
+
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -920,6 +960,13 @@ h6 {
     .hero-logo {
         width: 150px;
     }
+
+    .hero {
+        align-items: flex-start;
+        /* Move content up */
+        padding-top: 120px;
+        /* Adjust top spacing */
+    }
 }
 
 @media (max-width: 480px) {
@@ -935,5 +982,4 @@ h6 {
     .logo img {
         height: 40px;
     }
-}.  
- 
+}
