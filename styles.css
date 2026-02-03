@@ -412,6 +412,7 @@ input:-webkit-autofill:active {
     }
 }
 
+
 /* ===== Features Section ===== */
 .features {
     padding: var(--spacing-2xl) 0;
@@ -426,8 +427,8 @@ input:-webkit-autofill:active {
 
 .feature-card {
     background: var(--white);
-    padding: 1.5rem;
-    /* Reduced from default */
+    padding: 1.25rem;
+    /* Reduced padding further */
     border-radius: 12px;
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -443,8 +444,8 @@ input:-webkit-autofill:active {
 }
 
 .feature-icon {
-    font-size: 3rem;
-    margin-bottom: var(--spacing-md);
+    display: none;
+    /* Hide since emojis are removed */
 }
 
 .feature-card h3 {
@@ -483,19 +484,15 @@ input:-webkit-autofill:active {
 }
 
 .drink-image {
-    height: 180px;
+    height: 12px;
+    /* Super thin accent bar */
     position: relative;
-    background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-primary));
+    /* Gradient handles color */
 }
 
+/* Removed the ::after emoji content */
 .drink-image::after {
-    content: '🍹';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3rem;
-    opacity: 0.5;
+    display: none;
 }
 
 .drink-info {
@@ -533,9 +530,11 @@ input:-webkit-autofill:active {
 
 /* ===== CTA Section ===== */
 .cta-section {
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-lg) 0;
+    /* Reduced from 2xl */
     background: var(--color-bg-dark);
     position: relative;
+    margin-top: 0;
 }
 
 .cta-content {
@@ -963,9 +962,15 @@ input:-webkit-autofill:active {
 
     .hero {
         align-items: flex-start;
-        /* Move content up */
-        padding-top: 120px;
-        /* Adjust top spacing */
+        padding-top: 60px;
+        /* Tighter spacing */
+        min-height: auto;
+        /* Allow content to fit naturally */
+        padding-bottom: 3rem;
+    }
+
+    .hero-content {
+        padding: var(--spacing-md);
     }
 }
 
