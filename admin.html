@@ -541,32 +541,35 @@
                 const d = new Date(q.created_at);
                 return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
             }).length;
-            function renderQuotes() {
-                const list = document.getElementById('quotesList');
-                if (quotes.length === 0) {
-                    list.innerHTML = '<div style="text-align:center; padding: 2rem; color: #666;">No requests yet.</div>';
-                    return;
-                }
+            document.getElementById('statMonth').innerText = thisMonth;
+        }
 
-                list.innerHTML = quotes.map(q => {
-                    const status = q.status || 'new';
-                    const serviceClass = q.service_type === 'bar-services' ? 'bar-service' : 'workshop-service';
-                    const serviceLabel = q.service_type === 'bar-services' ? 'Bar Services' : 'Workshop';
+        function renderQuotes() {
+            const list = document.getElementById('quotesList');
+            if (quotes.length === 0) {
+                list.innerHTML = '<div style="text-align:center; padding: 2rem; color: #666;">No requests yet.</div>';
+                return;
+            }
 
-                    // Past Event Check
-                    const eventDateObj = new Date(q.event_date);
-                    const isPast = eventDateObj < new Date().setHours(0, 0, 0, 0);
-                    const pastClass = isPast ? 'past-event' : '';
-                    const pastLabel = isPast ? '<span style="background:#fee2e2; color:#b91c1c; padding:2px 6px; border-radius:4px; font-size:10px; margin-left:8px; display:inline-block; font-weight:700;">PASSED</span>' : '';
+            list.innerHTML = quotes.map(q => {
+                const status = q.status || 'new';
+                const serviceClass = q.service_type === 'bar-services' ? 'bar-service' : 'workshop-service';
+                const serviceLabel = q.service_type === 'bar-services' ? 'Bar Services' : 'Workshop';
 
-                    // Background tints for status
-                    let statusBg = '';
-                    if (status === 'booked') statusBg = 'background-color: #ecfdf5; border-left: 4px solid #10b981;';
-                    if (status === 'contacted') statusBg = 'background-color: #fffbeb; border-left: 4px solid #f59e0b;';
-                    if (status === 'new') statusBg = 'border-left: 4px solid #3b82f6;';
-                    if (status === 'archived') statusBg = 'opacity: 0.7; background-color: #f3f4f6; border-left: 4px solid #9ca3af;';
+                // Past Event Check
+                const eventDateObj = new Date(q.event_date);
+                const isPast = eventDateObj < new Date().setHours(0, 0, 0, 0);
+                const pastClass = isPast ? 'past-event' : '';
+                const pastLabel = isPast ? '<span style="background:#fee2e2; color:#b91c1c; padding:2px 6px; border-radius:4px; font-size:10px; margin-left:8px; display:inline-block; font-weight:700;">PASSED</span>' : '';
 
-                    return `
+                // Background tints for status
+                let statusBg = '';
+                if (status === 'booked') statusBg = 'background-color: #ecfdf5; border-left: 4px solid #10b981;';
+                if (status === 'contacted') statusBg = 'background-color: #fffbeb; border-left: 4px solid #f59e0b;';
+                if (status === 'new') statusBg = 'border-left: 4px solid #3b82f6;';
+                if (status === 'archived') statusBg = 'opacity: 0.7; background-color: #f3f4f6; border-left: 4px solid #9ca3af;';
+
+                return `
                 <div class="quote-card ${pastClass}" style="${statusBg}">
                     <div class="quote-header" onclick="this.parentElement.querySelector('.quote-expanded').classList.toggle('open')" style="display:flex; justify-content:space-between; align-items:center;">
                         <div class="quote-main-info">
@@ -630,8 +633,8 @@
                     </div>
                 </div>
                 `;
-                }).join('');
-            }
+            }).join('');
+        }
     </script>
 </body>
 
