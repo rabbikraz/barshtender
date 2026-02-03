@@ -385,12 +385,14 @@ h6 {
 }
 
 .feature-card {
-    background: var(--color-bg-card);
-    padding: var(--spacing-xl);
-    border-radius: var(--border-radius-lg);
+    background: var(--white);
+    padding: 1.5rem;
+    /* Reduced from default */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: all var(--transition-normal);
-    border: 1px solid rgba(45, 58, 92, 0.1);
+    transition: transform 0.3s ease;
+    border: 1px solid var(--border);
 }
 
 .feature-card:hover {
@@ -933,4 +935,5 @@ h6 {
     .logo img {
         height: 40px;
     }
-}
+}.  
+ 

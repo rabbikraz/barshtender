@@ -141,11 +141,19 @@ if (quoteForm && serviceTypeSelect) {
             .then(async response => {
                 const result = await response.json();
                 if (response.ok) {
-                    formStatus.textContent = 'Thank you! Your quote request has been sent successfully. Check your email for confirmation.';
-                    formStatus.classList.add('success');
+                    // Hide Form
+                    quoteForm.style.display = 'none';
+
+                    // Show Success Message
+                    formStatus.innerHTML = `
+                        <div class="success-message">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🎉 Request Sent!</h3>
+                            <p>Thank you for reaching out. We have received your quota request and will get back to you shortly via email.</p>
+                            <a href="index.html" class="btn btn-secondary" style="margin-top: 1.5rem; display: inline-block;">Return Home</a>
+                        </div>
+                    `;
+                    formStatus.className = 'form-status success';
                     quoteForm.reset();
-                    // Reset visibility
-                    eventTypeContainer.classList.add('hidden');
                 } else {
                     throw new Error(result.message || 'Submission failed');
                 }

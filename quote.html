@@ -128,20 +128,23 @@
 
                     <div class="form-group">
                         <label for="eventDate">Event Date *</label>
-                        <input type="date" id="eventDate" name="eventDate" required>
+                        <input type="text" id="eventDate" name="eventDate" placeholder="Select a date" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="guestCount">Estimated Guest Count</label>
-                        <input type="number" id="guestCount" name="guestCount" placeholder="100" min="1">
+                        <label for="guestCount">Estimated Guest Count *</label>
+                        <input type="number" id="guestCount" name="guestCount" placeholder="e.g. 50" min="1" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="location">Event Location</label>
-                        <input type="text" id="location" name="location" placeholder="City, State or Venue Name">
+                        <label for="location">Event Location *</label>
+                        <input type="text" id="location" name="location" placeholder="City, Venue, or Address" required>
                     </div>
-                    <div class="form-group">
-                        <label for="message">Tell us about your event</label>
-                        <textarea id="message" name="message"
-                            placeholder="Share any details about your event, special requests, or questions..."></textarea>
+
+                    <div class="form-group full-width">
+                        <label for="message">Tell us more about your event</label>
+                        <textarea id="message" name="message" rows="4"
+                            placeholder="Any specific requests, themes, or questions?"></textarea>
                     </div>
                     <div id="formStatus" class="form-status"></div>
                     <button type="submit" class="btn btn-primary" id="submitBtn">Submit Request</button>
