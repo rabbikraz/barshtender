@@ -306,13 +306,37 @@ input:-webkit-autofill:active {
 
 /* ===== Hero Section ===== */
 .hero {
-    min-height: 100vh;
+    min-height: 85vh;
+    /* Reduced from 100vh */
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    /* Aligns to top instead of center */
     justify-content: center;
     position: relative;
     background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 50%, var(--color-bg-primary) 100%);
     overflow: hidden;
+    padding-top: 140px;
+    /* Fixed top spacing for desktop */
+    padding-bottom: 4rem;
+}
+
+/* ... existing styles ... */
+
+@media (max-width: 768px) {
+    /* ... existing mobile styles ... */
+
+    .hero {
+        align-items: flex-start;
+        padding-top: 80px;
+        /* Slightly looser top */
+        min-height: auto;
+        padding-bottom: 10rem;
+        /* HIGH padding to clear the scroll indicator */
+    }
+
+    .hero-content {
+        padding: var(--spacing-md);
+    }
 }
 
 .hero::before {
@@ -962,11 +986,11 @@ input:-webkit-autofill:active {
 
     .hero {
         align-items: flex-start;
-        padding-top: 60px;
-        /* Tighter spacing */
+        padding-top: 80px;
+        /* Slightly looser top */
         min-height: auto;
-        /* Allow content to fit naturally */
-        padding-bottom: 3rem;
+        padding-bottom: 10rem;
+        /* HIGH padding to clear the scroll indicator */
     }
 
     .hero-content {
