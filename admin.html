@@ -541,33 +541,51 @@
                 const d = new Date(q.created_at);
                 return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
             }).length;
-            document.getElementById('statMonth').innerText = thisMonth;
-        }
+            function renderQuotes() {
+                const list = document.getElementById('quotesList');
+                if (quotes.length === 0) {
+                    list.innerHTML = '<div style="text-align:center; padding: 2rem; color: #666;">No requests yet.</div>';
+                    return;
+                }
 
-        function renderQuotes() {
-            const list = document.getElementById('quotesList');
-            if (quotes.length === 0) {
-                list.innerHTML = '<div style="text-align:center; padding: 2rem; color: #666;">No requests yet.</div>';
-                return;
-            }
+                list.innerHTML = quotes.map(q => {
+                    const status = q.status || 'new';
+                    const serviceClass = q.service_type === 'bar-services' ? 'bar-service' : 'workshop-service';
+                    const serviceLabel = q.service_type === 'bar-services' ? 'Bar Services' : 'Workshop';
 
-            list.innerHTML = quotes.map(q => {
-                const status = q.status || 'new';
-                const serviceClass = q.service_type === 'bar-services' ? 'bar-service' : 'workshop-service';
-                const serviceLabel = q.service_type === 'bar-services' ? 'Bar Services' : 'Workshop';
+                    // Past Event Check
+                    const eventDateObj = new Date(q.event_date);
+                    const isPast = eventDateObj < new Date().setHours(0, 0, 0, 0);
+                    const pastClass = isPast ? 'past-event' : '';
+                    const pastLabel = isPast ? '<span style="background:#fee2e2; color:#b91c1c; padding:2px 6px; border-radius:4px; font-size:10px; margin-left:8px; display:inline-block; font-weight:700;">PASSED</span>' : '';
 
-                return `
-                <div class="quote-card">
-                    <div class="quote-header" onclick="this.parentElement.querySelector('.quote-expanded').classList.toggle('open')">
+                    // Background tints for status
+                    let statusBg = '';
+                    if (status === 'booked') statusBg = 'background-color: #ecfdf5; border-left: 4px solid #10b981;';
+                    if (status === 'contacted') statusBg = 'background-color: #fffbeb; border-left: 4px solid #f59e0b;';
+                    if (status === 'new') statusBg = 'border-left: 4px solid #3b82f6;';
+                    if (status === 'archived') statusBg = 'opacity: 0.7; background-color: #f3f4f6; border-left: 4px solid #9ca3af;';
+
+                    return `
+                <div class="quote-card ${pastClass}" style="${statusBg}">
+                    <div class="quote-header" onclick="this.parentElement.querySelector('.quote-expanded').classList.toggle('open')" style="display:flex; justify-content:space-between; align-items:center;">
                         <div class="quote-main-info">
-                            <div class="status-dot ${status}" title="${status}"></div>
                             <div>
-                                <div class="client-name">${q.name}</div>
+                                <div class="client-name">
+                                    ${q.name} 
+                                    ${pastLabel}
+                                </div>
                                 <div style="font-size:0.8rem; color:#666">${q.email}</div>
                             </div>
-                            <span class="service-badge ${serviceClass}">${serviceLabel}</span>
                         </div>
-                        <div class="quote-date">${new Date(q.created_at).toLocaleDateString()}</div>
+                        
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <span class="service-badge ${serviceClass}">${serviceLabel}</span>
+                            <div style="text-align:right;">
+                                <div class="quote-date" style="font-weight:600; color:#374151;">${new Date(q.event_date).toLocaleDateString()}</div>
+                                <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #6b7280; margin-top: 2px;">${status}</div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="quote-expanded">
@@ -578,7 +596,7 @@
                             </div>
                             <div class="detail-group">
                                 <label>Event Date</label>
-                                <p>${q.event_date}</p>
+                                <p>${q.event_date} ${isPast ? '(Passed)' : ''}</p>
                             </div>
                             <div class="detail-group">
                                 <label>Guests</label>
@@ -593,8 +611,8 @@
                                 <p>${q.location || '-'}</p>
                             </div>
                              <div class="detail-group">
-                                <label>Status</label>
-                                <p style="text-transform: capitalize;">${status}</p>
+                                <label>Created At</label>
+                                <p>${new Date(q.created_at).toLocaleString()}</p>
                             </div>
                         </div>
 
@@ -612,8 +630,8 @@
                     </div>
                 </div>
                 `;
-            }).join('');
-        }
+                }).join('');
+            }
     </script>
 </body>
 

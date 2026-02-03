@@ -10,6 +10,8 @@ export async function onRequestPost({ request, env }) {
             });
         }
 
+        const API_KEY = env.RESEND_API_KEY || "re_ZhDRyiWr_Hk6AZus9aGofaaYf9awG6puu";
+
         // 0. Save to D1 Database (if available)
         let dbSaveError = null;
         if (env.DB) {
@@ -44,31 +46,67 @@ export async function onRequestPost({ request, env }) {
 
         // 1. Send Email to Admin (Barshtender)
         const adminEmailContent = `
-      New quote request received:
-      
-      Service Type: ${data.serviceType}
-      Event Type: ${data.eventType || "N/A"}
-      Name: ${data.name}
-      Email: ${data.email}
-      Phone: ${data.phone}
-      Event Date: ${data.eventDate}
-      Guests: ${data.guestCount}
-      Location: ${data.location}
-      Message: ${data.message}
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; color: #1f2937; background-color: #f3f4f6; margin: 0; padding: 0; }
+          .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+          .header { background: #2d3a5c; padding: 24px; text-align: center; }
+          .header h2 { color: #ffffff; margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 0.5px; }
+          .badge { display: inline-block; padding: 6px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; text-transform: uppercase; background: #b8ccb2; color: #1e3a29; margin-top: 10px; }
+          .content { padding: 32px; }
+          .field-group { margin-bottom: 20px; border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; }
+          .field-group:last-child { border-bottom: none; margin-bottom: 0; }
+          .label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; margin-bottom: 4px; font-weight: 600; }
+          .value { font-size: 16px; color: #111827; font-weight: 500; }
+          .message-box { background: #f9fafb; padding: 16px; border-radius: 8px; border: 1px solid #e5e7eb; margin-top: 16px; font-size: 14px; white-space: pre-wrap; }
+          .footer { background: #f9fafb; padding: 16px; text-align: center; font-size: 12px; color: #9ca3af; border-top: 1px solid #e5e7eb; }
+          .action-btn { display: inline-block; background: #2d3a5c; color: white !important; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600; margin-top: 20px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h2>New Quote Request</h2>
+            <div class="badge">${data.serviceType === 'bar-services' ? 'Bar Services' : 'Workshop'}</div>
+          </div>
+          <div class="content">
+            <div class="field-group">
+              <span class="label">Contact Info</span>
+              <div class="value">${data.name}</div>
+              <div style="margin-top:4px;"><a href="mailto:${data.email}" style="color:#2d3a5c; text-decoration:none;">${data.email}</a></div>
+              <div style="margin-top:4px;"><a href="tel:${data.phone}" style="color:#2d3a5c; text-decoration:none;">${data.phone}</a></div>
+            </div>
+            
+            <div class="field-group">
+              <span class="label">Event Details</span>
+              <div class="value">${data.eventDate}</div>
+              <div style="font-size: 14px; margin-top: 4px; color: #4b5563;">
+                 ${data.eventType || 'N/A'} • ${data.guestCount || '?'} Guests
+              </div>
+              <div style="font-size: 14px; margin-top: 4px; color: #4b5563;">At: ${data.location || 'N/A'}</div>
+            </div>
+
+            <div class="field-group">
+              <span class="label">Message</span>
+              <div class="message-box">${data.message || 'No additional message.'}</div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="https://barshtender.com/admin.html" class="action-btn">View in Admin Panel</a>
+            </div>
+          </div>
+          <div class="footer">
+            Sent via Barshtender Website
+          </div>
+        </div>
+      </body>
+      </html>
     `;
 
-        // We will use Resend (or any SMTP/API provider)
-        // using the provided key as fallback
-        const API_KEY = env.RESEND_API_KEY || "re_ZhDRyiWr_Hk6AZus9aGofaaYf9awG6puu";
-
-        if (!API_KEY) {
-            console.error("RESEND_API_KEY is missing");
-            return new Response(JSON.stringify({
-                status: "error",
-                message: "Server configuration error: Missing Email API Key."
-            }), { status: 500 });
-        }
-
+        // We will use Resend
         const adminEmailRes = await fetch("https://api.resend.com/emails", {
             method: "POST",
             headers: {
@@ -76,10 +114,11 @@ export async function onRequestPost({ request, env }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                from: "onboarding@resend.dev", // Using testing domain to ensure delivery without DNS setup
+                from: "onboarding@resend.dev",
                 to: ["barshtender@gmail.com"],
-                subject: `New Quote Request from ${data.name}`,
-                text: adminEmailContent,
+                reply_to: data.email,
+                subject: `New Request: ${data.name} (${data.serviceType === 'bar-services' ? 'Bar' : 'Workshop'})`,
+                html: adminEmailContent,
             }),
         });
 

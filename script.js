@@ -58,6 +58,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }, observerOptions);
 
+    // Initialize Datepicker
+    const eventDateInput = document.getElementById('eventDate');
+    if (eventDateInput) {
+        flatpickr(eventDateInput, {
+            minDate: "today",
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "F j, Y",
+            disableMobile: "true"
+        });
+    }
+
     document.querySelectorAll('.feature-card, .drink-card, .menu-item, .wishlist-item, .pesach-item').forEach(el => {
         el.classList.add('fade-in');
         observer.observe(el);
