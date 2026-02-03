@@ -147,8 +147,10 @@ if (quoteForm && serviceTypeSelect) {
                     // Show Success Message
                     formStatus.innerHTML = `
                         <div class="success-message">
-                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🎉 Request Sent!</h3>
-                            <p>Thank you for reaching out. We have received your quota request and will get back to you shortly via email.</p>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Request Received!</h3>
+                            <p style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 500;">Thank you so much for your quote request.</p>
+                            <p style="margin-bottom: 1rem;">We're looking forward to making this an unforgettable event.</p>
+                            <p style="font-style: italic; color: #047857;">Get ready to experience the art of kosher mixology.</p>
                             <a href="index.html" class="btn btn-secondary" style="margin-top: 1.5rem; display: inline-block;">Return Home</a>
                         </div>
                     `;
