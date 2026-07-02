@@ -4,148 +4,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Barshtender Wishlist - Recommended liquors by price range.">
+    <meta name="description" content="Build your Barshtender drink wishlist - tap the cocktails you love and send the list straight to us.">
     <title>Barshtender - Wishlist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo"><img src="logo.png" alt="Barshtender"></a>
-            <button class="mobile-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+<body data-nav="wishlist">
+    <main style="position:relative;overflow:hidden;">
 
-                <li><a href="menu.html">Event Menu</a></li>
-                <li><a href="wishlist.html" class="active">Wishlist</a></li>
-                <li><a href="pesach.html">Pesach '24</a></li>
-                <li><a href="quote.html" class="nav-cta">Request a Quote</a></li>
-            </ul>
-        </div>
-    </nav>
-    <main>
-        <header class="page-header">
-            <h1>Wishlist</h1>
-            <p class="subtitle">Curated recommendations by price and category</p>
+        <header style="position:relative;padding:clamp(80px,12vw,150px) clamp(20px,5vw,64px) clamp(30px,4vw,50px);overflow:hidden;background:radial-gradient(120% 120% at 50% 0%,#1c1340 0%,#0a0913 58%);">
+            <div style="position:absolute;top:-12%;left:50%;transform:translateX(-50%);width:50vw;height:40vw;max-width:640px;max-height:520px;border-radius:50%;background:radial-gradient(circle,rgba(91,89,184,0.4),transparent 64%);filter:blur(46px);animation:btDrift 20s ease-in-out infinite;pointer-events:none;"></div>
+            <div style="position:relative;max-width:1100px;margin:0 auto;">
+                <p style="margin:0 0 18px;font-size:13px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#cfe8ca;">Your Wishlist</p>
+                <h1 style="margin:0;font-size:clamp(40px,8vw,100px);line-height:0.94;font-weight:900;letter-spacing:-0.03em;max-width:14ch;">Pick your pours.</h1>
+                <p style="margin:24px 0 0;font-size:clamp(16px,1.8vw,21px);line-height:1.55;color:#9b97b3;max-width:50ch;">Tap the drinks you love. We will save them right here on your device, then you can send the list straight to us.</p>
+            </div>
         </header>
-        <section class="wishlist-section">
-            <div class="container">
-                <div class="wishlist-category">
-                    <h2>💰 Under $40</h2>
-                    <div class="wishlist-items">
-                        <div class="wishlist-item"><a
-                                href="https://www.totalwine.com/spirits/tequila/reposado/el-padrino-de-mi-tierra-reposado-charred-cask-tequila/p/346068750"
-                                target="_blank">El Padrino Charred Cask</a></div>
-                    </div>
+
+        <!-- SUMMARY BAR -->
+        <div style="position:sticky;top:72px;z-index:50;padding:14px clamp(20px,5vw,64px);background:rgba(10,9,19,0.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(207,232,202,0.12);">
+            <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between;">
+                <span id="countLabel" style="font-size:16px;font-weight:700;color:#f2eee8;">No drinks saved yet</span>
+                <div style="display:flex;gap:10px;align-items:center;">
+                    <button id="btnClear" class="wl-clear">Clear</button>
+                    <a id="btnShare" href="#" target="_blank" rel="noopener" style="text-decoration:none;text-align:center;font-size:13px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;padding:12px 22px;border-radius:999px;background:#cfe8ca;color:#0a0913;transition:transform .18s,box-shadow .18s;">Send via WhatsApp</a>
                 </div>
-                <div class="wishlist-category">
-                    <h2>💰 Under $60</h2>
-                    <div class="wishlist-items">
-                        <div class="wishlist-item">Basil Hayden Malted Rye</div>
-                        <div class="wishlist-item">Basil Hayden Subtle Smoke</div>
-                        <div class="wishlist-item">Sagamore Double Oak Rye</div>
-                        <div class="wishlist-item">El Tequileno Reposado Tequila</div>
-                        <div class="wishlist-item">El Tequileno Gran Blanco Tequila</div>
-                        <div class="wishlist-item"><a
-                                href="https://www.totalwine.com/spirits/tequila/blanco-silver/tequila-ocho-plata/p/105324750"
-                                target="_blank">Tequila Ocho Blanco</a></div>
-                        <div class="wishlist-item"><a
-                                href="https://www.totalwine.com/spirits/tequila/reposado/tequila-ocho-reposado/p/105325750"
-                                target="_blank">Tequila Ocho Reposado</a></div>
-                        <div class="wishlist-item">7 Leguas Reposado Tequila</div>
-                        <div class="wishlist-item"><a
-                                href="https://www.totalwine.com/spirits/tequila/blancosilver/lalo-blanco-tequila/p/241692750"
-                                target="_blank">Lalo Blanco</a></div>
-                        <div class="wishlist-item"><a
-                                href="https://www.totalwine.com/spirits/tequila/blancosilver/g4-tequila-blanco/p/192639750"
-                                target="_blank">G4 Tequila Blanco</a></div>
-                    </div>
-                </div>
-                <div class="wishlist-category">
-                    <h2>💰 Under $80</h2>
-                    <div class="wishlist-items">
-                        <div class="wishlist-item">El Tesoro Anejo Tequila</div>
-                        <div class="wishlist-item">Balvinie Caribbean Cask</div>
-                        <div class="wishlist-item">Nikka Coffey Malt Whisky</div>
-                        <div class="wishlist-item">Port Charlotte 10 Yr Peated Scotch</div>
-                    </div>
-                </div>
-                <div class="wishlist-category">
-                    <h2>🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotch</h2>
-                    <div class="wishlist-items">
-                        <div class="wishlist-item">Glenfiddich 21 Caribbean</div>
-                        <div class="wishlist-item">Lagavulin Guinness Cask</div>
-                    </div>
-                </div>
-                <div class="wishlist-category">
-                    <h2>🇯🇵 Japanese</h2>
-                    <div class="wishlist-items">
-                        <div class="wishlist-item">Nikka Malt</div>
-                        <div class="wishlist-item">Hibiki Blossom Harmony</div>
-                        <div class="wishlist-item">Yamazaki 12/18</div>
-                        <div class="wishlist-item">Hakushu 12</div>
-                        <div class="wishlist-item">Kavalan</div>
-                    </div>
-                </div>
-                <div class="wishlist-category">
-                    <h2>🥃 Bourbon</h2>
-                    <div class="wishlist-items">
-                        <div class="wishlist-item">Frank August small batch/single barrel</div>
-                        <div class="wishlist-item">Barrel Bourbon - all varieties</div>
-                        <div class="wishlist-item">Basil Hayden - Subtle Smoke</div>
-                        <div class="wishlist-item">Old Forester - 1910/1920</div>
-                        <div class="wishlist-item">Michters 10 yr</div>
-                        <div class="wishlist-item">Michters Toasted Barrel</div>
-                    </div>
-                </div>
-                <div class="wishlist-category">
-                    <h2>🌾 Rye</h2>
-                    <div class="wishlist-items">
-                        <div class="wishlist-item">Wild Turkey - Rare Breed Rye</div>
-                        <div class="wishlist-item">Peerless Rye</div>
-                        <div class="wishlist-item">Sagamore - all varieties (besides wine barrels)</div>
-                    </div>
-                </div>
-                <div class="wishlist-category">
-                    <h2>🥥 Rum</h2>
-                    <div class="wishlist-items">
-                        <div class="wishlist-item">Coconut Cartel</div>
-                    </div>
-                </div>
-                <div class="wishlist-category">
-                    <h2>🌵 Tequila</h2>
-                    <div class="wishlist-items">
-                        <div class="wishlist-item">Fortaleza - all varieties</div>
-                        <div class="wishlist-item">Siete Leguas - all varieties</div>
-                        <div class="wishlist-item">El Tesoro Anejo</div>
-                        <div class="wishlist-item">Cazcanes - all varieties</div>
-                        <div class="wishlist-item">Siembra Valles - all varieties</div>
-                        <div class="wishlist-item">Cascahuin - all varieties</div>
-                    </div>
-                </div>
+            </div>
+        </div>
+
+        <section style="position:relative;padding:clamp(36px,5vw,64px) clamp(20px,5vw,64px) clamp(72px,9vw,120px);">
+            <div style="max-width:1100px;margin:0 auto;">
+                <div id="wlGroups"></div>
+                <p style="margin:12px 0 0;font-size:15px;font-style:italic;color:#8b88a0;">This is a personal list saved on your device. Want something that isn't here? We will build it. Send us a note when you request a quote.</p>
             </div>
         </section>
+
     </main>
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>Barshtender</h3>
-                    <p>Kosher cocktails, reimagined.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Barshtender. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+
+    <script src="site.js"></script>
+    <script>
+        (function () {
+            var KEY = 'bt_wishlist_v1';
+            var GROUPS = [
+                { label: 'Vodka', items: ['Lychee Martini', 'Lemon Drop Martini', 'Cosmo', 'Sea Breeze', 'White Russian', 'Mocha Russian', 'Moscow Mule', 'Date in Moscow', 'Hibiscus Mule'] },
+                { label: 'Rum', items: ['Hurricane', 'Mojito', 'Passionfruit Mojito', 'Daiquiri', 'Hibiscus Daiquiri', 'Passionfruit Daiquiri', 'Mai Tai', 'Rum Old Fashioned', "Dark 'n Stormy", 'Pina Colada', 'Frozen Daiquiri', 'Baja Peach'] },
+                { label: 'Gin', items: ['Gin Gin Mule', 'Gimlet', 'Bramble', 'Gin Pesto', 'Clover Club', 'Bees Knees', 'French 75', 'Cucumber Gin and Tonic', 'The Elderly Flower'] },
+                { label: 'Tequila', items: ['Palomita', 'Spicy Margarita', 'Spicy Mango Margarita', 'Passionfruit Margarita', 'Oaxacan Old Fashioned'] },
+                { label: 'Whiskey', items: ['Maple Whiskey Sour', 'New York Sour', 'Gold Rush', 'Old Fashioned', 'Penicillin', 'Brown Derby', 'Smoked Old Fashioned', 'Whiskey Peach Smash'] },
+                { label: 'Arak', items: ['Casablanca Mule', 'Licorice Stick', 'Arak Grapefruit Cocktail'] },
+                { label: 'Mocktails', items: ['Shirley Temple', 'Mango Peach Gingerada', 'Hibiscus Limonada', 'Lychee No-tini'] }
+            ];
+
+            var picked = {};
+            try {
+                var raw = localStorage.getItem(KEY);
+                if (raw) picked = JSON.parse(raw) || {};
+            } catch (e) { }
+
+            function save() {
+                try { localStorage.setItem(KEY, JSON.stringify(picked)); } catch (e) { }
+            }
+
+            var groupsEl = document.getElementById('wlGroups');
+            var countEl = document.getElementById('countLabel');
+            var shareEl = document.getElementById('btnShare');
+
+            function updateSummary() {
+                var names = Object.keys(picked);
+                var n = names.length;
+                countEl.textContent = n === 0 ? 'No drinks saved yet' : (n + (n === 1 ? ' drink saved' : ' drinks saved'));
+                var msg = n === 0
+                    ? "Hi Barshtender! I'd love to talk about cocktails for my event."
+                    : ('Hi Barshtender! Here is my drink wishlist: ' + names.join(', ') + '.');
+                shareEl.href = 'https://wa.me/13393648770?text=' + encodeURIComponent(msg);
+            }
+
+            function render() {
+                groupsEl.innerHTML = '';
+                GROUPS.forEach(function (g) {
+                    var wrap = document.createElement('div');
+                    wrap.style.cssText = 'margin-bottom:40px;';
+
+                    var h = document.createElement('h3');
+                    h.style.cssText = 'margin:0 0 18px;font-size:clamp(22px,3.2vw,34px);font-weight:900;letter-spacing:-0.02em;border-bottom:1px solid rgba(207,232,202,0.14);padding-bottom:10px;';
+                    h.textContent = g.label;
+                    wrap.appendChild(h);
+
+                    var row = document.createElement('div');
+                    row.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;';
+                    g.items.forEach(function (name) {
+                        var on = !!picked[name];
+                        var b = document.createElement('button');
+                        b.className = 'wl-chip' + (on ? ' on' : '');
+                        b.textContent = (on ? '✓ ' : '+ ') + name;
+                        b.addEventListener('click', function () {
+                            if (picked[name]) delete picked[name]; else picked[name] = true;
+                            save();
+                            render();
+                            updateSummary();
+                        });
+                        row.appendChild(b);
+                    });
+                    wrap.appendChild(row);
+                    groupsEl.appendChild(wrap);
+                });
+            }
+
+            render();
+            updateSummary();
+        })();
+    </script>
 </body>
 
 </html>

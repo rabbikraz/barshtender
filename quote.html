@@ -8,169 +8,276 @@
     <title>Barshtender - Request a Quote</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <style>
-        /* Custom Datepicker Theme */
-        .flatpickr-calendar {
-            background: #2d3a5c;
-            border: 1px solid #b8ccb2;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .flatpickr-day.selected,
-        .flatpickr-day.startRange,
-        .flatpickr-day.endRange,
-        .flatpickr-day.selected.inRange,
-        .flatpickr-day.startRange.inRange,
-        .flatpickr-day.endRange.inRange,
-        .flatpickr-day.selected:focus,
-        .flatpickr-day.startRange:focus,
-        .flatpickr-day.endRange:focus,
-        .flatpickr-day.selected:hover,
-        .flatpickr-day.startRange:hover,
-        .flatpickr-day.endRange:hover,
-        .flatpickr-day.selected.prevMonthDay,
-        .flatpickr-day.startRange.prevMonthDay,
-        .flatpickr-day.endRange.prevMonthDay,
-        .flatpickr-day.selected.nextMonthDay,
-        .flatpickr-day.startRange.nextMonthDay,
-        .flatpickr-day.endRange.nextMonthDay {
-            background: #b8ccb2;
-            border-color: #b8ccb2;
-            color: #2d3a5c;
-            font-weight: bold;
-        }
-
-        .flatpickr-months .flatpickr-month {
-            background: #2d3a5c;
-            color: #fff;
-            fill: #fff;
-        }
-
-        .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
-            background-color: #2d3a5c;
-        }
-
-        .flatpickr-weekdays {
-            background: #2d3a5c;
-        }
-
-        span.flatpickr-weekday {
-            color: #b8ccb2;
-        }
-    </style>
 </head>
 
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo"><img src="logo.png" alt="Barshtender"></a>
-            <button class="mobile-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+<body data-nav="quote">
+    <main style="position:relative;overflow:hidden;">
 
-                <li><a href="menu.html">Event Menu</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="pesach.html">Pesach '24</a></li>
-                <li><a href="quote.html" class="nav-cta active">Request a Quote</a></li>
-            </ul>
-        </div>
-    </nav>
-    <main>
-        <header class="page-header">
-            <h1>Request a Quote</h1>
-            <p class="subtitle">Let's make your event unforgettable</p>
+        <header style="position:relative;padding:clamp(80px,12vw,140px) clamp(20px,5vw,64px) clamp(20px,3vw,40px);overflow:hidden;background:radial-gradient(120% 120% at 80% 0%,#1c1340 0%,#0a0913 60%);">
+            <div style="position:absolute;top:-12%;left:-6%;width:42vw;height:42vw;max-width:560px;max-height:560px;border-radius:50%;background:radial-gradient(circle,rgba(91,89,184,0.42),transparent 64%);filter:blur(46px);animation:btDrift 19s ease-in-out infinite;pointer-events:none;"></div>
+            <div style="position:relative;max-width:1180px;margin:0 auto;">
+                <p style="margin:0 0 18px;font-size:13px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#cfe8ca;">Request a Quote</p>
+                <h1 style="margin:0;font-size:clamp(38px,7vw,92px);line-height:0.94;font-weight:900;letter-spacing:-0.03em;max-width:15ch;">Tell us about your vision.</h1>
+                <p style="margin:22px 0 0;font-size:clamp(16px,1.8vw,20px);line-height:1.55;color:#9b97b3;max-width:52ch;">Share the details and we will design a menu and a proposal around your event. Pricing is quote-only.</p>
+            </div>
         </header>
-        <section class="quote-section">
-            <div class="container">
-                <form class="quote-form" id="quoteForm">
-                    <div class="form-group">
-                        <label for="serviceType">What kind of service are you looking for? *</label>
-                        <select id="serviceType" name="serviceType" required>
-                            <option value="">Select a service</option>
-                            <option value="bar-services">Bar at your event</option>
-                            <option value="cocktail-workshop">Cocktail Workshop</option>
-                        </select>
+
+        <section style="position:relative;padding:clamp(36px,5vw,64px) clamp(20px,5vw,64px) clamp(72px,9vw,120px);">
+            <div class="quote-grid" style="max-width:1180px;margin:0 auto;">
+
+                <!-- FORM CARD -->
+                <div style="border-radius:22px;background:rgba(255,255,255,0.025);border:1px solid rgba(207,232,202,0.14);padding:clamp(24px,3.5vw,44px);min-width:0;">
+
+                    <!-- STEP 1: choose service -->
+                    <div id="stepChoose">
+                        <h2 style="margin:0 0 8px;font-size:clamp(22px,3vw,30px);font-weight:900;letter-spacing:-0.02em;">What are you looking for?</h2>
+                        <p style="margin:0 0 24px;font-size:15px;color:#9b97b3;">Pick one to get started, then we will grab a few details.</p>
+                        <div style="display:grid;gap:14px;">
+                            <button type="button" class="choice-btn" data-mode="event">
+                                <span style="flex:1;">
+                                    <span style="display:block;font-size:19px;font-weight:800;margin-bottom:4px;">A bar at an event</span>
+                                    <span style="display:block;font-size:14px;line-height:1.5;color:#9b97b3;">A full craft cocktail bar for your simcha, party, or gathering.</span>
+                                </span>
+                                <span style="flex:none;color:#cfe8ca;font-size:24px;line-height:1;">&rarr;</span>
+                            </button>
+                            <button type="button" class="choice-btn" data-mode="workshop">
+                                <span style="flex:1;">
+                                    <span style="display:block;font-size:19px;font-weight:800;margin-bottom:4px;">A cocktail workshop</span>
+                                    <span style="display:block;font-size:14px;line-height:1.5;color:#9b97b3;">A hands-on session to learn the basics of building great cocktails.</span>
+                                </span>
+                                <span style="flex:none;color:#cfe8ca;font-size:24px;line-height:1;">&rarr;</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Hidden by default, shown only if bar services is selected -->
-                    <div class="form-group hidden" id="eventTypeContainer">
-                        <label for="eventType">What kind of event is this? *</label>
-                        <select id="eventType" name="eventType">
-                            <option value="">Select an event type</option>
-                            <option value="Wedding">Wedding</option>
-                            <option value="Bar/Bat Mitzvah">Bar/Bat Mitzvah</option>
-                            <option value="Corporate Event">Corporate Event</option>
-                            <option value="Private Party">Private Party</option>
-                            <option value="Holiday Celebration">Holiday Celebration</option>
-                            <option value="Other">Other</option>
-                        </select>
+                    <!-- STEP 2: details form -->
+                    <div id="stepForm" style="display:none;">
+                        <button type="button" id="btnBack" style="background:transparent;border:none;color:#cfe8ca;font-family:Archivo,sans-serif;font-size:14px;font-weight:700;cursor:pointer;padding:0;margin-bottom:16px;display:inline-flex;align-items:center;gap:6px;">&larr; Change</button>
+                        <p id="modeLabel" style="margin:0 0 20px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#cfe8ca;"></p>
+                        <form id="quoteForm" novalidate>
+                            <div class="form-grid">
+                                <div class="span2">
+                                    <label class="flabel" for="fName">Name</label>
+                                    <input class="field" type="text" id="fName" placeholder="Your full name">
+                                    <span class="ferr" id="errName"></span>
+                                </div>
+                                <div>
+                                    <label class="flabel" for="fEmail">Email</label>
+                                    <input class="field" type="email" id="fEmail" placeholder="you@email.com">
+                                    <span class="ferr" id="errEmail"></span>
+                                </div>
+                                <div>
+                                    <label class="flabel" for="fPhone">Phone</label>
+                                    <input class="field" type="tel" id="fPhone" placeholder="(000) 000-0000">
+                                    <span class="ferr"></span>
+                                </div>
+                                <div>
+                                    <label class="flabel" for="fDate">Preferred date</label>
+                                    <input class="field" type="date" id="fDate">
+                                    <span class="ferr" id="errDate"></span>
+                                </div>
+                                <div id="typeWrap">
+                                    <label class="flabel">Event type</label>
+                                    <div id="dd" style="position:relative;">
+                                        <button type="button" class="dd-toggle" id="ddToggle">
+                                            <span id="ddValue" style="color:#6f6b85;">Select one</span>
+                                            <span style="flex:none;color:#cfe8ca;font-size:11px;line-height:1;" id="ddChevron">&#9660;</span>
+                                        </button>
+                                        <div class="dd-menu" id="ddMenu"></div>
+                                    </div>
+                                    <span class="ferr" id="errType"></span>
+                                </div>
+                                <div>
+                                    <label class="flabel" for="fGuests">Guest count</label>
+                                    <input class="field" type="number" min="1" id="fGuests" placeholder="e.g. 150">
+                                    <span class="ferr"></span>
+                                </div>
+                                <div class="span2">
+                                    <label class="flabel" for="fLocation">Location</label>
+                                    <input class="field" type="text" id="fLocation" placeholder="Venue, city, or area (Miami-Dade / Broward)">
+                                    <span class="ferr"></span>
+                                </div>
+                                <div class="span2">
+                                    <label class="flabel" for="fMessage">Message</label>
+                                    <textarea class="field" id="fMessage" placeholder="Tell us the vibe, any must-have drinks, dietary notes, or questions."></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" id="btnSubmit" class="btn-mint" style="margin-top:22px;width:100%;font-size:16px;padding:18px;border-radius:14px;">Send my request</button>
+                            <span class="ferr" id="errSubmit" style="text-align:center;margin-top:10px;"></span>
+                        </form>
                     </div>
 
-                    <div class="form-group">
-                        <label for="name">Your Name *</label>
-                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                    <!-- STEP 3: success -->
+                    <div id="stepDone" style="display:none;text-align:center;padding:40px 10px;animation:btPop .4s ease both;">
+                        <div style="width:78px;height:78px;margin:0 auto 24px;border-radius:50%;background:#cfe8ca;color:#0a0913;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;box-shadow:0 0 36px rgba(207,232,202,0.45);">&#10003;</div>
+                        <h2 style="margin:0 0 12px;font-size:clamp(26px,4vw,40px);font-weight:900;letter-spacing:-0.02em;">Request sent.</h2>
+                        <p style="margin:0 auto;font-size:17px;line-height:1.55;color:#9b97b3;max-width:40ch;">Thanks, <span id="doneName"></span>. We will be in touch shortly to start designing your bar. For anything urgent, reach us on WhatsApp.</p>
+                        <a href="https://wa.me/13393648770" target="_blank" rel="noopener" class="btn-mint" style="margin-top:28px;font-size:14px;padding:14px 28px;">Message us on WhatsApp</a>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required placeholder="john@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
-                    </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="eventDate">Event Date *</label>
-                        <input type="text" id="eventDate" name="eventDate" placeholder="Select a date" required>
+                <!-- CONTACT RAIL -->
+                <aside style="display:flex;flex-direction:column;gap:14px;min-width:0;">
+                    <div style="border-radius:18px;padding:28px;background:linear-gradient(135deg,rgba(91,89,184,0.22),rgba(207,232,202,0.06));border:1px solid rgba(207,232,202,0.18);">
+                        <p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#cfe8ca;">Prefer to talk?</p>
+                        <p style="margin:0;font-size:18px;font-weight:700;line-height:1.4;">Reach us directly, any time.</p>
                     </div>
+                    <a href="https://wa.me/13393648770" target="_blank" rel="noopener" class="card-hover" style="text-decoration:none;border-radius:16px;padding:22px 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(207,232,202,0.12);">
+                        <p style="margin:0 0 4px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:#8b88a0;">WhatsApp</p>
+                        <p style="margin:0;font-size:18px;font-weight:700;color:#f2eee8;">+1 339 364 8770</p>
+                    </a>
+                    <a href="https://instagram.com/barshtender" target="_blank" rel="noopener" class="card-hover" style="text-decoration:none;border-radius:16px;padding:22px 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(207,232,202,0.12);">
+                        <p style="margin:0 0 4px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:#8b88a0;">Instagram</p>
+                        <p style="margin:0;font-size:18px;font-weight:700;color:#f2eee8;">@barshtender</p>
+                    </a>
+                    <a href="mailto:barshtender@gmail.com" class="card-hover" style="text-decoration:none;border-radius:16px;padding:22px 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(207,232,202,0.12);">
+                        <p style="margin:0 0 4px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:#8b88a0;">Email</p>
+                        <p style="margin:0;font-size:18px;font-weight:700;color:#f2eee8;word-break:break-all;">barshtender@gmail.com</p>
+                    </a>
+                    <p style="margin:8px 4px 0;font-size:13px;line-height:1.6;color:#6f6b85;">Under the supervision of Chabad in South Beach. Serving Miami-Dade and Broward.</p>
+                </aside>
 
-                    <div class="form-group">
-                        <label for="guestCount">Estimated Guest Count *</label>
-                        <input type="number" id="guestCount" name="guestCount" placeholder="e.g. 50" min="1" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="location">Event Location *</label>
-                        <input type="text" id="location" name="location" placeholder="City, Venue, or Address" required>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="message">Tell us more about your event</label>
-                        <textarea id="message" name="message" rows="4"
-                            placeholder="Any specific requests, themes, or questions?"></textarea>
-                    </div>
-                    <div id="formStatus" class="form-status"></div>
-                    <button type="submit" class="btn btn-primary" id="submitBtn">Submit Request</button>
-                </form>
             </div>
         </section>
+
     </main>
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>Barshtender</h3>
-                    <p>Kosher cocktails, reimagined.</p>
-                </div>
-                <div class="footer-links"><a href="https://instagram.com/barshtender" target="_blank"
-                        rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                        </svg></a></div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Barshtender. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+
+    <script src="site.js"></script>
+    <script>
+        (function () {
+            var mode = ''; // 'event' | 'workshop'
+            var typeValue = '';
+            var TYPE_OPTIONS = ['Wedding', 'Bar or Bat Mitzvah', 'Sheva Brachos', 'Corporate', 'Private party', 'Other'];
+
+            var stepChoose = document.getElementById('stepChoose');
+            var stepForm = document.getElementById('stepForm');
+            var stepDone = document.getElementById('stepDone');
+            var modeLabel = document.getElementById('modeLabel');
+            var typeWrap = document.getElementById('typeWrap');
+            var dd = document.getElementById('dd');
+            var ddToggle = document.getElementById('ddToggle');
+            var ddMenu = document.getElementById('ddMenu');
+            var ddValue = document.getElementById('ddValue');
+            var ddChevron = document.getElementById('ddChevron');
+            var btnSubmit = document.getElementById('btnSubmit');
+
+            // --- step navigation ---
+            document.querySelectorAll('.choice-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    mode = btn.getAttribute('data-mode');
+                    modeLabel.textContent = mode === 'event' ? 'A bar at an event' : 'A cocktail workshop';
+                    typeWrap.style.display = mode === 'event' ? '' : 'none';
+                    stepChoose.style.display = 'none';
+                    stepForm.style.display = '';
+                });
+            });
+            document.getElementById('btnBack').addEventListener('click', function () {
+                stepForm.style.display = 'none';
+                stepChoose.style.display = '';
+                closeMenu();
+                clearErrors();
+            });
+
+            // --- custom dropdown ---
+            function renderMenu() {
+                ddMenu.innerHTML = '';
+                TYPE_OPTIONS.forEach(function (label) {
+                    var b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = 'dd-opt';
+                    b.innerHTML = '<span></span><span style="flex:none;color:#cfe8ca;"></span>';
+                    b.firstChild.textContent = label;
+                    if (typeValue === label) b.lastChild.innerHTML = '&#10003;';
+                    b.addEventListener('click', function () {
+                        typeValue = label;
+                        ddValue.textContent = label;
+                        ddValue.style.color = '';
+                        setError('errType', '');
+                        closeMenu();
+                    });
+                    ddMenu.appendChild(b);
+                });
+            }
+            function openMenu() { renderMenu(); ddMenu.classList.add('open'); ddChevron.innerHTML = '&#9650;'; }
+            function closeMenu() { ddMenu.classList.remove('open'); ddChevron.innerHTML = '&#9660;'; }
+            ddToggle.addEventListener('click', function () {
+                ddMenu.classList.contains('open') ? closeMenu() : openMenu();
+            });
+            document.addEventListener('mousedown', function (e) {
+                if (!dd.contains(e.target)) closeMenu();
+            });
+
+            // --- validation + submit ---
+            function setError(id, msg) {
+                var el = document.getElementById(id);
+                if (el) el.textContent = msg;
+            }
+            function clearErrors() {
+                ['errName', 'errEmail', 'errDate', 'errType', 'errSubmit'].forEach(function (id) { setError(id, ''); });
+            }
+            ['fName', 'fEmail', 'fDate'].forEach(function (id) {
+                document.getElementById(id).addEventListener('input', function () {
+                    setError('err' + id.slice(1), '');
+                });
+            });
+
+            document.getElementById('quoteForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                clearErrors();
+
+                var name = document.getElementById('fName').value.trim();
+                var email = document.getElementById('fEmail').value.trim();
+                var phone = document.getElementById('fPhone').value.trim();
+                var date = document.getElementById('fDate').value;
+                var guests = document.getElementById('fGuests').value;
+                var location = document.getElementById('fLocation').value.trim();
+                var message = document.getElementById('fMessage').value.trim();
+
+                var hasError = false;
+                if (!name) { setError('errName', 'Please tell us your name.'); hasError = true; }
+                if (!email) { setError('errEmail', 'We need an email to reach you.'); hasError = true; }
+                else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { setError('errEmail', 'That email looks off.'); hasError = true; }
+                if (!date) { setError('errDate', 'Which date are you planning for?'); hasError = true; }
+                if (mode === 'event' && !typeValue) { setError('errType', 'Pick an event type.'); hasError = true; }
+                if (hasError) return;
+
+                var payload = {
+                    serviceType: mode === 'event' ? 'bar-services' : 'cocktail-workshop',
+                    eventType: mode === 'event' ? typeValue : '',
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    eventDate: date,
+                    guestCount: guests,
+                    location: location,
+                    message: message
+                };
+
+                btnSubmit.disabled = true;
+                btnSubmit.textContent = 'Sending…';
+
+                fetch('/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).then(function (res) {
+                    if (!res.ok) throw new Error('Request failed');
+                    return res.json();
+                }).then(function () {
+                    document.getElementById('doneName').textContent = name.split(' ')[0];
+                    stepForm.style.display = 'none';
+                    stepDone.style.display = '';
+                }).catch(function () {
+                    setError('errSubmit', 'Something went wrong sending your request. Please try again, or reach us on WhatsApp.');
+                }).finally(function () {
+                    btnSubmit.disabled = false;
+                    btnSubmit.textContent = 'Send my request';
+                });
+            });
+        })();
+    </script>
 </body>
 
 </html>
