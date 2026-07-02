@@ -48,10 +48,26 @@ npx wrangler d1 execute barshtender-db --local --file=schema.sql
 
 ## Backend
 
-- `functions/api/submit.js` — saves quote requests to D1 and forwards to Google Apps Script (emails + Google Sheets)
+- `functions/api/submit.js` — saves quote requests to D1, sends brand-styled emails via Resend (when configured), and forwards to Google Apps Script for Google Sheets logging
 - `functions/api/admin/*` — admin session + quote listing endpoints
 - `schema.sql` — D1 `quotes` table
-- `APPS_SCRIPT_INSTRUCTIONS.js` — Google Apps Script code (paste into script.google.com); sends brand-styled notification + confirmation emails
+- `APPS_SCRIPT_INSTRUCTIONS.js` — Google Apps Script code (paste into script.google.com). Logs every quote to Sheets; also sends the emails itself as a fallback when Resend is not configured (`logOnly` flag)
+
+### Email via Resend
+
+Set these in Cloudflare Pages > Settings > Environment variables:
+
+| Variable | Example | Notes |
+|---|---|---|
+| `RESEND_API_KEY` | `re_...` | Secret. Create at resend.com after verifying the domain |
+| `FROM_EMAIL` | `Barshtender <quotes@barshtender.com>` | Must be on the Resend-verified domain |
+| `ADMIN_EMAIL` | `barshtender@gmail.com` | Where quote notifications go (default if unset) |
+
+Until `RESEND_API_KEY` + `FROM_EMAIL` are set, emails are sent by the Google Apps Script instead — nothing breaks before the domain is verified.
+
+Related setup for the domain:
+- **Gmail "Send mail as"** — smtp.resend.com, port 465, user `resend`, password = API key, to reply from the domain address inside Gmail
+- **Cloudflare Email Routing** — forward `quotes@domain` to Gmail so customer replies arrive in the inbox
 
 ## Tech Stack
 

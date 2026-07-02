@@ -86,6 +86,13 @@ function doPost(e) {
             data.message || ""
         ]);
 
+        // When the Cloudflare Worker already sent the emails via Resend,
+        // it passes logOnly: true — we only log to the sheet and stop here.
+        if (data.logOnly) {
+            return ContentService.createTextOutput(JSON.stringify({ "status": "success", "message": "Logged to sheet (emails handled by worker)" }))
+                .setMimeType(ContentService.MimeType.JSON);
+        }
+
         const isBar = data.serviceType === "bar-services";
         const serviceLabel = isBar ? "A bar at an event" : "A cocktail workshop";
         const firstName = (data.name || "").trim().split(" ")[0];
