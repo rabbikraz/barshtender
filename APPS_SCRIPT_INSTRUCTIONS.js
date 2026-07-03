@@ -33,22 +33,20 @@ function btRow_(label, value) {
         '</tr>';
 }
 
-// Shared shell: dark page, centered card, mint headline
+// Shared shell: centered dark card (logo inside), light page around it
 function btEmailShell_(kickerText, headlineHtml, bodyHtml) {
     return '' +
-        '<div style="margin:0;padding:0;background-color:#0a0913;">' +
-        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0a0913;">' +
+        '<div style="margin:0;padding:0;">' +
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' +
         '<tr><td align="center" style="padding:40px 16px;">' +
 
         '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">' +
 
-        // Wordmark
-        '<tr><td align="center" style="padding:0 0 28px;">' +
+        // Card (wordmark inside)
+        '<tr><td style="background-color:#14101f;border:1px solid #2e2a44;border-radius:20px;padding:36px 36px 40px;">' +
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="padding:0 0 30px;">' +
         '<img src="https://barshtender.pages.dev/assets/logo-green-tight.png" alt="Barshtender" height="30" style="display:block;height:30px;width:auto;border:0;">' +
-        '</td></tr>' +
-
-        // Card
-        '<tr><td style="background-color:#14101f;border:1px solid #2e2a44;border-radius:20px;padding:40px 36px;">' +
+        '</td></tr></table>' +
         '<p style="' + BT_FONT + 'margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#cfe8ca;">' + kickerText + '</p>' +
         '<h1 style="' + BT_FONT + 'margin:0 0 18px;font-size:30px;line-height:1.05;font-weight:900;letter-spacing:-0.5px;color:#f2eee8;">' + headlineHtml + '</h1>' +
         bodyHtml +
@@ -56,7 +54,7 @@ function btEmailShell_(kickerText, headlineHtml, bodyHtml) {
 
         // Footer
         '<tr><td align="center" style="padding:28px 12px 0;">' +
-        '<p style="' + BT_FONT + 'margin:0 0 6px;font-size:13px;font-weight:700;color:#cfe8ca;">Kosher cocktails, reimagined.</p>' +
+        '<p style="' + BT_FONT + 'margin:0 0 6px;font-size:13px;font-weight:700;color:#3b3a79;">Kosher cocktails, reimagined.</p>' +
         '<p style="' + BT_FONT + 'margin:0;font-size:12px;line-height:1.6;color:#6f6b85;">Under the supervision of Chabad in South Beach.<br>Serving Miami-Dade &amp; Broward.</p>' +
         '</td></tr>' +
 
