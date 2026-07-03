@@ -32,6 +32,18 @@ body {
 .bt-reveal { animation: btRise both; animation-timeline: view(); animation-range: entry 0% cover 24%; }
 @media (prefers-reduced-motion: reduce) { .bt-reveal { animation: none; } }
 
+/* ---------- Home hero ---------- */
+.bt-hero { min-height: 92vh; display: flex; align-items: center; }
+.bt-hero-inner { padding: 120px clamp(20px, 5vw, 64px) 90px; }
+.bt-hero-h1 { margin: 0; font-size: clamp(30px, 7.5vw, 110px); line-height: 0.94; font-weight: 900; letter-spacing: -0.03em; }
+.bt-hero-h1 .bt-nowrap { white-space: nowrap; }
+@media (max-width: 759px) {
+  .bt-hero { min-height: 0; }
+  .bt-hero-inner { padding: 64px 20px 72px; }
+  .bt-hero-h1 { font-size: clamp(52px, 15vw, 76px); }
+  .bt-hero-h1 .bt-nowrap { white-space: normal; }
+}
+
 /* ---------- Buttons & links ---------- */
 .btn-mint {
   display: inline-block;
