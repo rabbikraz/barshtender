@@ -44,7 +44,7 @@ function emailShell(kickerText, headlineHtml, bodyHtml) {
         '<tr><td align="center" style="padding:40px 16px;">' +
         '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">' +
         '<tr><td align="center" style="padding:0 0 28px;">' +
-        '<span style="' + FONT + 'font-size:20px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#cfe8ca;">Barshtender</span>' +
+        '<img src="https://barshtender.pages.dev/assets/logo-green-tight.png" alt="Barshtender" height="30" style="display:block;height:30px;width:auto;border:0;">' +
         '</td></tr>' +
         '<tr><td style="background-color:#14101f;border:1px solid #2e2a44;border-radius:20px;padding:40px 36px;">' +
         '<p style="' + FONT + 'margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#cfe8ca;">' + kickerText + '</p>' +

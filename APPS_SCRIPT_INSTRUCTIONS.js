@@ -44,7 +44,7 @@ function btEmailShell_(kickerText, headlineHtml, bodyHtml) {
 
         // Wordmark
         '<tr><td align="center" style="padding:0 0 28px;">' +
-        '<span style="' + BT_FONT + 'font-size:20px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#cfe8ca;">Barshtender</span>' +
+        '<img src="https://barshtender.pages.dev/assets/logo-green-tight.png" alt="Barshtender" height="30" style="display:block;height:30px;width:auto;border:0;">' +
         '</td></tr>' +
 
         // Card
