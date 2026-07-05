@@ -51,7 +51,7 @@
           '<div style="display:flex;flex-direction:column;gap:14px;">' +
             '<a href="https://wa.me/13393648770" target="_blank" rel="noopener" class="hov-mint" style="text-decoration:none;color:#f2eee8;font-size:15px;font-weight:600;">WhatsApp<br><span style="font-weight:400;color:#9b97b3;font-size:14px;">+1 339 364 8770</span></a>' +
             '<a href="https://instagram.com/barshtender" target="_blank" rel="noopener" class="hov-mint" style="text-decoration:none;color:#f2eee8;font-size:15px;font-weight:600;">Instagram<br><span style="font-weight:400;color:#9b97b3;font-size:14px;">@barshtender</span></a>' +
-            '<a href="mailto:barshtender@gmail.com" class="hov-mint" style="text-decoration:none;color:#f2eee8;font-size:15px;font-weight:600;">Email<br><span style="font-weight:400;color:#9b97b3;font-size:14px;">barshtender@gmail.com</span></a>' +
+            '<a href="mailto:info@barshtender.com" class="hov-mint" style="text-decoration:none;color:#f2eee8;font-size:15px;font-weight:600;">Email<br><span style="font-weight:400;color:#9b97b3;font-size:14px;">info@barshtender.com</span></a>' +
           '</div>' +
         '</div>' +
         '<div style="display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;">' +
