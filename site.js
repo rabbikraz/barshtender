@@ -22,7 +22,6 @@
         '<a href="index.html" class="bt-overlay-link">Home</a>' +
         '<a href="menu.html" class="bt-overlay-link">Drink Menu</a>' +
         '<a href="services.html" class="bt-overlay-link">Services</a>' +
-        '<a href="wishlist.html" class="bt-overlay-link">Wishlist</a>' +
         '<a href="quote.html" class="btn-mint bt-overlay-cta">Request a Quote</a>' +
       '</nav>' +
     '</div>';
@@ -42,8 +41,6 @@
             '<a href="index.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Home</a>' +
             '<a href="menu.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Drink Menu</a>' +
             '<a href="services.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Services</a>' +
-            '<a href="wishlist.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Wishlist</a>' +
-            '<a href="pesach.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Pesach</a>' +
           '</div>' +
         '</div>' +
         '<div>' +
