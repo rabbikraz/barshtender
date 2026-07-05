@@ -20,6 +20,7 @@
         .status-select { font-family: Archivo, sans-serif; font-size: 13px; font-weight: 700; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.04); border: 1px solid rgba(207,232,202,0.25); color: #f2eee8; cursor: pointer; outline: none; }
         .st-new { border-color: #cfe8ca; color: #cfe8ca; }
         .st-replied { border-color: #8ea7e0; color: #8ea7e0; }
+        .st-deposit { border-color: #e6d3a3; color: #e6d3a3; }
         .st-booked { border-color: #b7a3e6; color: #b7a3e6; }
         .st-happened { border-color: #9b97b3; color: #9b97b3; }
         .st-cancelled { border-color: #e98b8b; color: #e98b8b; }
@@ -93,8 +94,8 @@
 
     <script>
         (function () {
-            var STATUSES = ['new', 'replied', 'booked', 'happened', 'cancelled'];
-            var STATUS_LABELS = { new: 'New', replied: 'Replied', booked: 'Bartenders booked', happened: 'Happened', cancelled: 'Cancelled' };
+            var STATUSES = ['new', 'replied', 'deposit', 'booked', 'happened', 'cancelled'];
+            var STATUS_LABELS = { new: 'New', replied: 'Replied', deposit: 'Deposit received', booked: 'Bartenders booked', happened: 'Happened', cancelled: 'Cancelled' };
             var DEFAULT_INCLUDES = 'Professional bartenders\nAll tools, glassware, ice, mixers, and garnishes (you supply the alcohol)\nCustom menu design\nMocktail lineup\nPremium, creative garnishes';
 
             var quotes = [];
@@ -282,6 +283,30 @@
                     btnReply.textContent = 'Reply with quote';
                     btnReply.addEventListener('click', function () { openReply(q); });
                     actions.appendChild(btnReply);
+
+                    var btnDeposit = document.createElement('button');
+                    btnDeposit.className = 'ad-btn';
+                    btnDeposit.textContent = 'Deposit received';
+                    btnDeposit.addEventListener('click', function () {
+                        if (!confirm('Mark deposit received and email ' + q.email + ' a thank-you with their menu-builder link?')) return;
+                        btnDeposit.disabled = true;
+                        btnDeposit.textContent = 'Sending…';
+                        fetch('/api/admin/deposit_received', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: q.id })
+                        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+                            .then(function (res) {
+                                if (!res.ok) throw new Error(res.j.error || 'Failed');
+                                load();
+                            })
+                            .catch(function (e) {
+                                alert(e.message);
+                                btnDeposit.disabled = false;
+                                btnDeposit.textContent = 'Deposit received';
+                            });
+                    });
+                    actions.appendChild(btnDeposit);
 
                     var btnMenu = document.createElement('button');
                     btnMenu.className = 'ad-btn';
