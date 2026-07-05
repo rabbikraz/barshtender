@@ -2,9 +2,13 @@ export async function onRequestPost({ request, env }) {
     try {
         const { username, password } = await request.json();
 
-        // Hardcoded credentials as requested (admin / admin123)
-        // Ideally this should be in Environment Variables
-        if (username === "admin" && password === "admin123") {
+        // Credentials come from env vars when set (Cloudflare Pages >
+        // Settings > Environment variables: ADMIN_USER / ADMIN_PASSWORD).
+        // Falls back to the legacy hardcoded pair until those are set.
+        const validUser = env.ADMIN_USER || "admin";
+        const validPassword = env.ADMIN_PASSWORD || "admin123";
+
+        if (username === validUser && password === validPassword) {
 
             // Create a simple session cookie
             const cookieValue = "authorized=true; Path=/; HttpOnly; SameSite=Strict; Max-Age=86400"; // 24 hours

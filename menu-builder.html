@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Barshtender - Build Your Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .mb-pkg { text-align: left; cursor: pointer; font-family: Archivo, sans-serif; flex: 1 1 240px; padding: 22px 24px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(207,232,202,0.16); color: #f2eee8; transition: border-color .18s, background .18s; }
+        .mb-pkg.on { border-color: #cfe8ca; background: linear-gradient(165deg, rgba(91,89,184,0.2), rgba(255,255,255,0.03)); }
+        .mb-pkg:hover { border-color: #cfe8ca; }
+        .mb-add { display: flex; gap: 10px; margin-top: 14px; }
+        .mb-add input { flex: 1; }
+        .mb-add button { flex: none; }
+    </style>
+</head>
+
+<body>
+    <main style="position:relative;overflow:hidden;min-height:70vh;">
+
+        <header style="position:relative;padding:clamp(60px,9vw,110px) clamp(20px,5vw,64px) clamp(24px,3vw,40px);overflow:hidden;background:radial-gradient(120% 120% at 50% 0%,#1c1340 0%,#0a0913 58%);">
+            <div style="position:absolute;top:-12%;left:-6%;width:42vw;height:42vw;max-width:560px;max-height:560px;border-radius:50%;background:radial-gradient(circle,rgba(91,89,184,0.42),transparent 64%);filter:blur(46px);animation:btDrift 19s ease-in-out infinite;pointer-events:none;"></div>
+            <div style="position:relative;max-width:1100px;margin:0 auto;">
+                <p style="margin:0 0 18px;font-size:13px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#cfe8ca;">Your menu builder</p>
+                <h1 id="mbTitle" style="margin:0;font-size:clamp(36px,7vw,84px);line-height:0.94;font-weight:900;letter-spacing:-0.03em;max-width:16ch;">Pick your pours.</h1>
+                <p id="mbIntro" style="margin:22px 0 0;font-size:clamp(16px,1.8vw,20px);line-height:1.55;color:#9b97b3;max-width:54ch;">Choose your package, then tap the drinks you want at your event.</p>
+            </div>
+        </header>
+
+        <!-- Invalid link -->
+        <section id="mbInvalid" style="display:none;padding:clamp(36px,5vw,64px) clamp(20px,5vw,64px) clamp(72px,9vw,120px);">
+            <div style="max-width:700px;margin:0 auto;border-radius:22px;background:rgba(255,255,255,0.025);border:1px solid rgba(207,232,202,0.14);padding:clamp(28px,4vw,48px);text-align:center;">
+                <h2 style="margin:0 0 12px;font-size:clamp(22px,3vw,30px);font-weight:900;">This link isn't valid.</h2>
+                <p style="margin:0;font-size:16px;line-height:1.6;color:#9b97b3;">Double-check the link from your email, or reach out and we will send you a fresh one.</p>
+                <a href="https://wa.me/13393648770" target="_blank" rel="noopener" class="btn-mint" style="margin-top:26px;font-size:14px;padding:14px 28px;">Message us on WhatsApp</a>
+            </div>
+        </section>
+
+        <!-- Builder -->
+        <section id="mbBuilder" style="display:none;padding:clamp(28px,4vw,52px) clamp(20px,5vw,64px) clamp(72px,9vw,120px);">
+            <div style="max-width:1100px;margin:0 auto;">
+
+                <!-- Package choice -->
+                <div style="margin-bottom:10px;">
+                    <p style="margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#cfe8ca;">Step 1 — Pick your package</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:14px;">
+                        <button type="button" class="mb-pkg" data-pkg="4-1">
+                            <span style="display:block;font-size:19px;font-weight:800;margin-bottom:4px;">4 cocktails + 1 mocktail</span>
+                            <span style="display:block;font-size:14px;color:#9b97b3;">Heavier on the cocktails.</span>
+                        </button>
+                        <button type="button" class="mb-pkg" data-pkg="3-2">
+                            <span style="display:block;font-size:19px;font-weight:800;margin-bottom:4px;">3 cocktails + 2 mocktails</span>
+                            <span style="display:block;font-size:14px;color:#9b97b3;">More for guests who aren't drinking.</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sticky counter -->
+                <div style="position:sticky;top:72px;z-index:50;padding:14px 0;background:linear-gradient(180deg,#0a0913 78%,transparent);">
+                    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between;">
+                        <span id="mbCount" style="font-size:16px;font-weight:700;color:#f2eee8;">Pick a package to start</span>
+                        <button id="mbSubmit" class="btn-mint" style="font-size:14px;padding:13px 26px;" disabled>Submit my menu</button>
+                    </div>
+                    <span class="ferr" id="mbError"></span>
+                </div>
+
+                <p style="margin:8px 0 0;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#cfe8ca;">Step 2 — Tap your drinks</p>
+                <div id="mbGroups"></div>
+
+            </div>
+        </section>
+
+        <!-- Success -->
+        <section id="mbDone" style="display:none;padding:clamp(36px,5vw,64px) clamp(20px,5vw,64px) clamp(72px,9vw,120px);">
+            <div style="max-width:700px;margin:0 auto;border-radius:22px;background:rgba(255,255,255,0.025);border:1px solid rgba(207,232,202,0.14);padding:clamp(28px,4vw,48px);text-align:center;animation:btPop .4s ease both;">
+                <div style="width:78px;height:78px;margin:0 auto 24px;border-radius:50%;background:#cfe8ca;color:#0a0913;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;box-shadow:0 0 36px rgba(207,232,202,0.45);">&#10003;</div>
+                <h2 style="margin:0 0 12px;font-size:clamp(24px,3.6vw,36px);font-weight:900;">Menu locked in.</h2>
+                <p style="margin:0 auto;font-size:16px;line-height:1.6;color:#9b97b3;max-width:44ch;">We got your picks and we will confirm everything with you. Changed your mind? You can reopen this link and submit again any time before your event.</p>
+                <button id="mbAgain" class="btn-ghost" style="margin-top:26px;font-size:14px;padding:13px 26px;">Edit my picks</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="site.js"></script>
+    <script>
+        (function () {
+            var COCKTAIL_GROUPS = [
+                { label: 'Vodka', items: ['Lychee Martini', 'Lemon Drop Martini', 'Cosmo', 'Sea Breeze', 'White Russian', 'Mocha Russian', 'Moscow Mule', 'Date in Moscow', 'Hibiscus Mule'] },
+                { label: 'Rum', items: ['Hurricane', 'Mojito', 'Passionfruit Mojito', 'Daiquiri', 'Hibiscus Daiquiri', 'Passionfruit Daiquiri', 'Mai Tai', 'Rum Old Fashioned', "Dark 'n Stormy", 'Pina Colada', 'Frozen Daiquiri', 'Baja Peach'] },
+                { label: 'Gin', items: ['Gin Gin Mule', 'Gimlet', 'Bramble', 'Gin Pesto', 'Clover Club', 'Bees Knees', 'French 75', 'Cucumber Gin and Tonic', 'The Elderly Flower'] },
+                { label: 'Tequila', items: ['Palomita', 'Spicy Margarita', 'Spicy Mango Margarita', 'Passionfruit Margarita', 'Oaxacan Old Fashioned'] },
+                { label: 'Whiskey', items: ['Maple Whiskey Sour', 'New York Sour', 'Gold Rush', 'Old Fashioned', 'Penicillin', 'Brown Derby', 'Smoked Old Fashioned', 'Whiskey Peach Smash', 'Amaretto Sour'] },
+                { label: 'Arak', items: ['Casablanca Mule', 'Licorice Stick', 'Arak Grapefruit Cocktail'] }
+            ];
+            var MOCKTAILS = ['Shirley Temple', 'Mango Peach Gingerada', 'Hibiscus Limonada', 'Lychee No-tini'];
+
+            var token = new URLSearchParams(location.search).get('t') || '';
+            var pkg = null;                    // '4-1' | '3-2'
+            var picked = { c: [], m: [] };     // selected names (customs included)
+            var customs = { c: [], m: [] };    // typed-in extras shown as chips
+
+            var elBuilder = document.getElementById('mbBuilder');
+            var elInvalid = document.getElementById('mbInvalid');
+            var elDone = document.getElementById('mbDone');
+            var elGroups = document.getElementById('mbGroups');
+            var elCount = document.getElementById('mbCount');
+            var elSubmit = document.getElementById('mbSubmit');
+            var elError = document.getElementById('mbError');
+
+            function limits() { return pkg === '4-1' ? { c: 4, m: 1 } : pkg === '3-2' ? { c: 3, m: 2 } : null; }
+
+            function updateCounter() {
+                var l = limits();
+                if (!l) { elCount.textContent = 'Pick a package to start'; elSubmit.disabled = true; return; }
+                elCount.textContent = 'Cocktails ' + picked.c.length + '/' + l.c + ' · Mocktails ' + picked.m.length + '/' + l.m;
+                elSubmit.disabled = !(picked.c.length === l.c && picked.m.length === l.m);
+            }
+
+            function toggle(kind, name) {
+                var l = limits();
+                if (!l) { elError.textContent = 'Pick a package first.'; return; }
+                elError.textContent = '';
+                var arr = picked[kind];
+                var idx = arr.indexOf(name);
+                if (idx >= 0) arr.splice(idx, 1);
+                else {
+                    var max = kind === 'c' ? l.c : l.m;
+                    if (arr.length >= max) { elError.textContent = 'You already picked ' + max + ' ' + (kind === 'c' ? 'cocktails' : 'mocktail' + (max > 1 ? 's' : '')) + ' — unselect one to swap.'; return; }
+                    arr.push(name);
+                }
+                render();
+            }
+
+            function chipRow(kind, items) {
+                var row = document.createElement('div');
+                row.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;';
+                items.forEach(function (name) {
+                    var on = picked[kind].indexOf(name) >= 0;
+                    var b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = 'wl-chip' + (on ? ' on' : '');
+                    b.textContent = (on ? '✓ ' : '+ ') + name;
+                    b.addEventListener('click', function () { toggle(kind, name); });
+                    row.appendChild(b);
+                });
+                return row;
+            }
+
+            function addCustomUI(kind, wrap) {
+                var box = document.createElement('div');
+                box.className = 'mb-add';
+                var input = document.createElement('input');
+                input.className = 'field';
+                input.type = 'text';
+                input.maxLength = 80;
+                input.placeholder = kind === 'c' ? 'Add your own cocktail…' : 'Add your own mocktail…';
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn-ghost';
+                btn.style.cssText = 'font-size:13px;padding:12px 20px;';
+                btn.textContent = 'Add';
+                function add() {
+                    var name = input.value.trim();
+                    if (!name) return;
+                    if (customs[kind].indexOf(name) < 0) customs[kind].push(name);
+                    input.value = '';
+                    toggle(kind, name);
+                }
+                btn.addEventListener('click', add);
+                input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); add(); } });
+                box.appendChild(input);
+                box.appendChild(btn);
+                wrap.appendChild(box);
+            }
+
+            function section(title, build) {
+                var wrap = document.createElement('div');
+                wrap.style.cssText = 'margin:28px 0 0;';
+                var h = document.createElement('h3');
+                h.style.cssText = 'margin:0 0 16px;font-size:clamp(20px,3vw,30px);font-weight:900;letter-spacing:-0.02em;border-bottom:1px solid rgba(207,232,202,0.14);padding-bottom:10px;';
+                h.textContent = title;
+                wrap.appendChild(h);
+                build(wrap);
+                return wrap;
+            }
+
+            function render() {
+                document.querySelectorAll('.mb-pkg').forEach(function (b) {
+                    b.classList.toggle('on', b.getAttribute('data-pkg') === pkg);
+                });
+                elGroups.innerHTML = '';
+                COCKTAIL_GROUPS.forEach(function (g) {
+                    elGroups.appendChild(section(g.label, function (wrap) {
+                        wrap.appendChild(chipRow('c', g.items));
+                    }));
+                });
+                elGroups.appendChild(section('Your own cocktails', function (wrap) {
+                    if (customs.c.length) wrap.appendChild(chipRow('c', customs.c));
+                    addCustomUI('c', wrap);
+                }));
+                elGroups.appendChild(section('Mocktails', function (wrap) {
+                    wrap.appendChild(chipRow('m', MOCKTAILS.concat(customs.m)));
+                    addCustomUI('m', wrap);
+                }));
+                updateCounter();
+            }
+
+            document.querySelectorAll('.mb-pkg').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    pkg = b.getAttribute('data-pkg');
+                    var l = limits();
+                    // Trim overflow if switching to a smaller package
+                    picked.c = picked.c.slice(0, l.c);
+                    picked.m = picked.m.slice(0, l.m);
+                    elError.textContent = '';
+                    render();
+                });
+            });
+
+            elSubmit.addEventListener('click', function () {
+                elSubmit.disabled = true;
+                elSubmit.textContent = 'Submitting…';
+                fetch('/api/menu', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: token, package: pkg, cocktails: picked.c, mocktails: picked.m })
+                }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+                    .then(function (res) {
+                        if (!res.ok) throw new Error(res.j.error || 'Something went wrong.');
+                        elBuilder.style.display = 'none';
+                        elDone.style.display = '';
+                        window.scrollTo({ top: 0 });
+                    })
+                    .catch(function (e) { elError.textContent = e.message; })
+                    .finally(function () {
+                        elSubmit.disabled = false;
+                        elSubmit.textContent = 'Submit my menu';
+                    });
+            });
+
+            document.getElementById('mbAgain').addEventListener('click', function () {
+                elDone.style.display = 'none';
+                elBuilder.style.display = '';
+            });
+
+            // --- Load ---
+            if (!token) { elInvalid.style.display = ''; return; }
+            fetch('/api/menu?t=' + encodeURIComponent(token))
+                .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+                .then(function (info) {
+                    if (info.name) {
+                        document.getElementById('mbTitle').textContent = 'Pick your pours, ' + info.name + '.';
+                    }
+                    if (info.eventDate) {
+                        document.getElementById('mbIntro').textContent = 'For your event on ' + info.eventDate + ' — choose your package, then tap the drinks you want.';
+                    }
+                    // Restore a previous submission for editing
+                    if (info.selection) {
+                        pkg = info.selection.package || null;
+                        picked.c = (info.selection.cocktails || []).slice();
+                        picked.m = (info.selection.mocktails || []).slice();
+                        var known = {};
+                        COCKTAIL_GROUPS.forEach(function (g) { g.items.forEach(function (n) { known[n] = 1; }); });
+                        customs.c = picked.c.filter(function (n) { return !known[n]; });
+                        customs.m = picked.m.filter(function (n) { return MOCKTAILS.indexOf(n) < 0; });
+                    }
+                    elBuilder.style.display = '';
+                    render();
+                })
+                .catch(function () { elInvalid.style.display = ''; });
+        })();
+    </script>
+</body>
+
+</html>

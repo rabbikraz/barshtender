@@ -8,633 +8,367 @@
     <title>Barshtender Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --primary: #2d3a5c;
-            --secondary: #b8ccb2;
-            --bg: #f3f4f6;
-            --white: #ffffff;
-            --text-dark: #111827;
-            --text-gray: #6b7280;
-            --border: #e5e7eb;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-dark);
-            height: 100vh;
-            display: flex;
-            overflow: hidden;
-        }
-
-        /* Login Styles */
-        #loginScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .login-box {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-title {
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .input-group input:focus {
-            border-color: var(--primary);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 0.875rem;
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn:hover {
-            background: #1f2937;
-        }
-
-        /* Dashboard Layout */
-        .sidebar {
-            width: 250px;
-            background: var(--primary);
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem;
-        }
-
-        .brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-item {
-            padding: 0.75rem 1rem;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            border-radius: 6px;
-            margin-bottom: 0.5rem;
-            transition: all 0.2s;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-item.active,
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--white);
-        }
-
-        .main-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 2rem;
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-gray);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        /* Queue List */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .quote-card {
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            margin-bottom: 1rem;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            transition: all 0.2s;
-        }
-
-        .quote-card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            transform: translateY(-2px);
-        }
-
-        .quote-header {
-            padding: 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            background: #fff;
-        }
-
-        .quote-main-info {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--secondary);
-        }
-
-        .status-dot.new {
-            background: #3b82f6;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-        }
-
-        .status-dot.contacted {
-            background: #f59e0b;
-        }
-
-        .status-dot.booked {
-            background: #10b981;
-        }
-
-        .status-dot.archived {
-            background: #9ca3af;
-        }
-
-        .client-name {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .service-badge {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 99px;
-            background: #f3f4f6;
-            color: var(--text-gray);
-            font-weight: 500;
-            text-transform: uppercase;
-        }
-
-        .bar-service {
-            background: #e0e7ff;
-            color: #4338ca;
-        }
-
-        .workshop-service {
-            background: #fae8ff;
-            color: #86198f;
-        }
-
-        .quote-date {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-
-        .quote-expanded {
-            display: none;
-            padding: 1.5rem;
-            background: #f9fafb;
-            border-top: 1px solid var(--border);
-        }
-
-        .quote-expanded.open {
-            display: block;
-        }
-
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .detail-group label {
-            display: block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--text-gray);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .detail-group p {
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        .message-box {
-            background: var(--white);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .action-bar {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .action-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            border: 1px solid var(--border);
-            background: var(--white);
-            transition: all 0.2s;
-        }
-
-        .action-btn:hover {
-            background: #f3f4f6;
-        }
-
-        .btn-contact {
-            color: var(--warning);
-            border-color: var(--warning);
-        }
-
-        .btn-contact:hover {
-            background: #fffbeb;
-        }
-
-        .btn-book {
-            color: var(--success);
-            border-color: var(--success);
-        }
-
-        .btn-book:hover {
-            background: #ecfdf5;
-        }
-
-        .btn-archive {
-            color: var(--text-gray);
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* Loader */
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 3px solid var(--primary);
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+        .ad-card { border-radius: 18px; background: rgba(255,255,255,0.025); border: 1px solid rgba(207,232,202,0.14); padding: 24px; }
+        .ad-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #6f6b85; }
+        .ad-value { font-size: 15px; font-weight: 600; color: #f2eee8; }
+        .ad-btn { font-family: Archivo, sans-serif; cursor: pointer; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 11px 18px; border-radius: 999px; background: transparent; border: 1px solid rgba(207,232,202,0.25); color: #cdc9dc; transition: all .18s; }
+        .ad-btn:hover { border-color: #cfe8ca; color: #cfe8ca; }
+        .ad-btn:disabled { opacity: .5; cursor: default; }
+        .status-select { font-family: Archivo, sans-serif; font-size: 13px; font-weight: 700; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.04); border: 1px solid rgba(207,232,202,0.25); color: #f2eee8; cursor: pointer; outline: none; }
+        .st-new { border-color: #cfe8ca; color: #cfe8ca; }
+        .st-replied { border-color: #8ea7e0; color: #8ea7e0; }
+        .st-booked { border-color: #b7a3e6; color: #b7a3e6; }
+        .st-happened { border-color: #9b97b3; color: #9b97b3; }
+        .st-cancelled { border-color: #e98b8b; color: #e98b8b; }
+        .ad-modal-bg { position: fixed; inset: 0; z-index: 400; background: rgba(5,4,12,0.8); backdrop-filter: blur(6px); display: none; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 4vh 16px; }
+        .ad-modal-bg.open { display: flex; }
+        .ad-modal { width: 100%; max-width: 640px; border-radius: 20px; background: #14101f; border: 1px solid rgba(207,232,202,0.2); padding: clamp(22px, 3.5vw, 36px); animation: btPop .25s ease both; }
+        .ad-pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(207,232,202,0.25); color: #cfe8ca; }
     </style>
 </head>
 
 <body>
-
-    <!-- LOGIN SCREEN -->
-    <div id="loginScreen">
-        <div class="login-box">
-            <h1 class="login-title">Barshtender</h1>
+    <!-- ============ LOGIN ============ -->
+    <section id="loginView" style="display:none;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(120% 120% at 50% 0%,#1c1340 0%,#0a0913 60%);">
+        <div style="width:100%;max-width:400px;border-radius:22px;background:rgba(255,255,255,0.03);border:1px solid rgba(207,232,202,0.16);padding:clamp(28px,5vw,44px);">
+            <img src="assets/logo-green-tight.png" alt="Barshtender" style="height:26px;width:auto;display:block;margin:0 auto 26px;">
+            <h1 style="margin:0 0 22px;font-size:24px;font-weight:900;letter-spacing:-0.02em;text-align:center;">Admin</h1>
             <form id="loginForm">
-                <div class="input-group">
-                    <label>Username</label>
-                    <input type="text" name="username" required>
-                </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" name="password" required>
-                </div>
-                <div id="loginError" style="color: red; text-align: center; margin-bottom: 1rem;" class="hidden"></div>
-                <button type="submit" class="btn">Access Admin Panel</button>
+                <label class="flabel" for="adUser">Username</label>
+                <input class="field" type="text" id="adUser" autocomplete="username" style="margin-bottom:16px;">
+                <label class="flabel" for="adPass">Password</label>
+                <input class="field" type="password" id="adPass" autocomplete="current-password">
+                <span class="ferr" id="loginError"></span>
+                <button type="submit" class="btn-mint" style="margin-top:18px;width:100%;font-size:15px;padding:15px;border-radius:12px;">Sign in</button>
             </form>
         </div>
-    </div>
+    </section>
 
-    <!-- MAIN DASHBOARD -->
-    <div id="dashboard" class="hidden" style="display: flex; width: 100%;">
-        <nav class="sidebar">
-            <div class="brand">
-                <span>🍸 BARSHTENDER</span>
+    <!-- ============ DASHBOARD ============ -->
+    <div id="dashView" style="display:none;">
+        <header style="position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px clamp(20px,4vw,48px);background:rgba(10,9,19,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(207,232,202,0.12);">
+            <div style="display:flex;align-items:center;gap:14px;">
+                <img src="assets/logo-green-tight.png" alt="Barshtender" style="height:22px;width:auto;">
+                <span style="font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6f6b85;">Admin</span>
             </div>
-            <a class="nav-item active">Dashboard</a>
-            <a class="nav-item" href="https://barshtender.com" target="_blank">View Website</a>
-            <div style="flex: 1"></div>
-            <a class="nav-item" id="logoutBtn">Logout</a>
-        </nav>
+            <button id="btnLogout" class="ad-btn">Log out</button>
+        </header>
 
-        <main class="main-content">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Total Requests</div>
-                    <div class="stat-value" id="statTotal">-</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Pending</div>
-                    <div class="stat-value" id="statPending">-</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">This Month</div>
-                    <div class="stat-value" id="statMonth">-</div>
-                </div>
-            </div>
-
-            <div class="section-header">
-                <h2 class="section-title">Recent Inquiries</h2>
-                <div style="font-size: 0.875rem; color: var(--text-gray);">Live Database View</div>
-            </div>
-
-            <div id="loading" class="loader hidden"></div>
-            <div id="quotesList"></div>
+        <main style="max-width:1100px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(20px,4vw,48px) 100px;">
+            <h1 style="margin:0 0 20px;font-size:clamp(26px,4vw,40px);font-weight:900;letter-spacing:-0.02em;">Quote requests</h1>
+            <div id="filters" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;"></div>
+            <div id="list" style="display:flex;flex-direction:column;gap:16px;"></div>
+            <p id="emptyMsg" style="display:none;font-size:16px;color:#6f6b85;font-style:italic;">Nothing here yet.</p>
         </main>
     </div>
 
+    <!-- ============ REPLY MODAL ============ -->
+    <div class="ad-modal-bg" id="replyModal">
+        <div class="ad-modal">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px;">
+                <h2 style="margin:0;font-size:22px;font-weight:900;">Reply with a quote</h2>
+                <button class="ad-btn" id="replyClose" style="border:none;font-size:18px;padding:4px 10px;">&times;</button>
+            </div>
+            <p id="replyTo" style="margin:0 0 20px;font-size:14px;color:#9b97b3;"></p>
+
+            <label class="flabel">Subject</label>
+            <input class="field" id="rSubject" type="text" style="margin-bottom:16px;">
+
+            <label class="flabel">Price / the numbers <span style="text-transform:none;letter-spacing:0;color:#6f6b85;">(shown big — e.g. "$1,200" or "$950 – $1,200")</span></label>
+            <input class="field" id="rPrice" type="text" placeholder="$" style="margin-bottom:16px;">
+
+            <label class="flabel">What's included <span style="text-transform:none;letter-spacing:0;color:#6f6b85;">(one item per line)</span></label>
+            <textarea class="field" id="rIncludes" style="min-height:130px;margin-bottom:16px;"></textarea>
+
+            <label class="flabel">Personal message</label>
+            <textarea class="field" id="rMessage" style="min-height:110px;" placeholder="Anything you want to say directly…"></textarea>
+
+            <span class="ferr" id="replyError"></span>
+            <button id="replySend" class="btn-mint" style="margin-top:14px;width:100%;font-size:15px;padding:15px;border-radius:12px;">Send quote email</button>
+        </div>
+    </div>
+
     <script>
-        // State
-        let quotes = [];
+        (function () {
+            var STATUSES = ['new', 'replied', 'booked', 'happened', 'cancelled'];
+            var STATUS_LABELS = { new: 'New', replied: 'Replied', booked: 'Bartenders booked', happened: 'Happened', cancelled: 'Cancelled' };
+            var DEFAULT_INCLUDES = 'Professional bartenders\nAll tools, glassware, ice, mixers, and garnishes (you supply the alcohol)\nCustom menu design\nMocktail lineup\nPremium, creative garnishes';
 
-        // Auth Check
-        if (sessionStorage.getItem('adminToken')) {
-            showDashboard();
-        }
+            var quotes = [];
+            var filter = 'all';
+            var replyId = null;
 
-        // Login Logic
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const form = new FormData(e.target);
-            try {
-                const res = await fetch('/api/admin/login', {
+            var loginView = document.getElementById('loginView');
+            var dashView = document.getElementById('dashView');
+            var listEl = document.getElementById('list');
+            var filtersEl = document.getElementById('filters');
+            var emptyMsg = document.getElementById('emptyMsg');
+
+            function fmtDate(iso) {
+                if (!iso) return '';
+                try { return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }); }
+                catch (e) { return iso; }
+            }
+
+            // ---------- Auth ----------
+            function showLogin() { loginView.style.display = 'flex'; dashView.style.display = 'none'; }
+            function showDash() { loginView.style.display = 'none'; dashView.style.display = ''; }
+
+            document.getElementById('loginForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                fetch('/api/admin/login', {
                     method: 'POST',
-                    body: JSON.stringify(Object.fromEntries(form)),
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: document.getElementById('adUser').value, password: document.getElementById('adPass').value })
+                }).then(function (r) {
+                    if (!r.ok) throw new Error('Invalid credentials');
+                    showDash();
+                    load();
+                }).catch(function (e) { document.getElementById('loginError').textContent = e.message; });
+            });
+
+            document.getElementById('btnLogout').addEventListener('click', function () {
+                fetch('/api/admin/logout', { method: 'POST' }).then(function () { showLogin(); });
+            });
+
+            // ---------- Data ----------
+            function load() {
+                fetch('/api/admin/quotes').then(function (r) {
+                    if (r.status === 401) { showLogin(); throw new Error('unauthorized'); }
+                    return r.json();
+                }).then(function (data) {
+                    quotes = Array.isArray(data) ? data : [];
+                    render();
+                }).catch(function () { });
+            }
+
+            // ---------- Filters ----------
+            function renderFilters() {
+                filtersEl.innerHTML = '';
+                var all = [{ key: 'all', label: 'All (' + quotes.length + ')' }].concat(STATUSES.map(function (s) {
+                    var n = quotes.filter(function (q) { return (q.status || 'new') === s; }).length;
+                    return { key: s, label: STATUS_LABELS[s] + ' (' + n + ')' };
+                }));
+                all.forEach(function (f) {
+                    var b = document.createElement('button');
+                    b.className = 'chip' + (filter === f.key ? ' on' : '');
+                    b.textContent = f.label;
+                    b.addEventListener('click', function () { filter = f.key; render(); });
+                    filtersEl.appendChild(b);
                 });
-                if (res.ok) {
-                    sessionStorage.setItem('adminToken', 'true');
-                    showDashboard();
+            }
+
+            // ---------- List ----------
+            function row(label, value, href) {
+                if (!value) return null;
+                var d = document.createElement('div');
+                var l = document.createElement('div');
+                l.className = 'ad-label';
+                l.textContent = label;
+                var v = document.createElement('div');
+                v.className = 'ad-value';
+                if (href) {
+                    var a = document.createElement('a');
+                    a.href = href;
+                    a.textContent = value;
+                    a.style.cssText = 'color:#cfe8ca;text-decoration:none;';
+                    v.appendChild(a);
                 } else {
-                    document.getElementById('loginError').textContent = 'Invalid credentials';
-                    document.getElementById('loginError').classList.remove('hidden');
+                    v.textContent = value;
                 }
-            } catch (err) {
-                console.error(err);
+                d.appendChild(l);
+                d.appendChild(v);
+                return d;
             }
-        });
 
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            sessionStorage.removeItem('adminToken');
-            location.reload();
-        });
+            function render() {
+                renderFilters();
+                listEl.innerHTML = '';
+                var visible = filter === 'all' ? quotes : quotes.filter(function (q) { return (q.status || 'new') === filter; });
+                emptyMsg.style.display = visible.length ? 'none' : '';
 
-        function showDashboard() {
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-            fetchQuotes();
-        }
+                visible.forEach(function (q) {
+                    var card = document.createElement('div');
+                    card.className = 'ad-card';
 
-        async function fetchQuotes() {
-            document.getElementById('loading').classList.remove('hidden');
-            try {
-                const res = await fetch('/api/admin/quotes');
-                quotes = await res.json();
-                renderQuotes();
-                updateStats();
-            } catch (err) {
-                document.getElementById('quotesList').innerHTML = `<p style="color:red">Failed to load quotes. Ensure DB is bound.</p>`;
-            } finally {
-                document.getElementById('loading').classList.add('hidden');
-            }
-        }
+                    // Header line: name + service + status select
+                    var head = document.createElement('div');
+                    head.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;margin-bottom:16px;';
+                    var title = document.createElement('div');
+                    var isBar = q.service_type === 'bar-services';
+                    title.innerHTML = '<div style="font-size:20px;font-weight:800;">' + '</div>';
+                    title.firstChild.textContent = q.name || '(no name)';
+                    var sub = document.createElement('div');
+                    sub.style.cssText = 'font-size:13px;color:#9b97b3;margin-top:2px;';
+                    sub.textContent = (isBar ? 'Bar at an event' : 'Cocktail workshop') + (q.event_type ? ' · ' + q.event_type : '') + ' · received ' + fmtDate(q.created_at);
+                    title.appendChild(sub);
 
-        async function updateStatus(id, newStatus) {
-            try {
-                const res = await fetch('/api/admin/update_status', {
-                    method: 'POST',
-                    body: JSON.stringify({ id, status: newStatus }),
-                    headers: { 'Content-Type': 'application/json' }
+                    var sel = document.createElement('select');
+                    sel.className = 'status-select st-' + (q.status || 'new');
+                    STATUSES.forEach(function (s) {
+                        var o = document.createElement('option');
+                        o.value = s;
+                        o.textContent = STATUS_LABELS[s];
+                        if ((q.status || 'new') === s) o.selected = true;
+                        sel.appendChild(o);
+                    });
+                    sel.addEventListener('change', function () {
+                        fetch('/api/admin/update_status', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: q.id, status: sel.value })
+                        }).then(function (r) {
+                            if (!r.ok) throw new Error();
+                            q.status = sel.value;
+                            render();
+                        }).catch(function () { alert('Failed to update status'); });
+                    });
+
+                    head.appendChild(title);
+                    head.appendChild(sel);
+                    card.appendChild(head);
+
+                    // Details grid
+                    var grid = document.createElement('div');
+                    grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px 20px;margin-bottom:16px;';
+                    [row('Email', q.email, 'mailto:' + q.email),
+                     row('Phone', q.phone, q.phone ? 'tel:' + q.phone : null),
+                     row('Event date', q.event_date),
+                     row('Guests', q.guest_count),
+                     row('Location', q.location)].forEach(function (r) { if (r) grid.appendChild(r); });
+                    card.appendChild(grid);
+
+                    // Message
+                    if (q.message) {
+                        var msg = document.createElement('div');
+                        msg.style.cssText = 'padding:14px 16px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(207,232,202,0.08);margin-bottom:16px;';
+                        msg.innerHTML = '<div class="ad-label" style="margin-bottom:6px;">Message</div>';
+                        var p = document.createElement('div');
+                        p.style.cssText = 'font-size:14px;line-height:1.6;color:#cdc9dc;white-space:pre-wrap;';
+                        p.textContent = q.message;
+                        msg.appendChild(p);
+                        card.appendChild(msg);
+                    }
+
+                    // Menu selection (if submitted)
+                    if (q.menu_selection) {
+                        try {
+                            var selData = JSON.parse(q.menu_selection);
+                            var mwrap = document.createElement('div');
+                            mwrap.style.cssText = 'padding:14px 16px;border-radius:12px;background:linear-gradient(165deg,rgba(91,89,184,0.14),rgba(255,255,255,0.02));border:1px solid rgba(207,232,202,0.16);margin-bottom:16px;';
+                            mwrap.innerHTML = '<div class="ad-label" style="margin-bottom:8px;">Menu submitted ' + fmtDate(q.menu_submitted_at) + ' · ' + (selData.package === '4-1' ? '4 cocktails + 1 mocktail' : '3 cocktails + 2 mocktails') + '</div>';
+                            var lists = document.createElement('div');
+                            lists.style.cssText = 'font-size:14px;line-height:1.7;color:#f2eee8;font-weight:600;';
+                            lists.textContent = 'Cocktails: ' + (selData.cocktails || []).join(', ');
+                            var m2 = document.createElement('div');
+                            m2.style.cssText = 'font-size:14px;line-height:1.7;color:#f2eee8;font-weight:600;';
+                            m2.textContent = 'Mocktails: ' + (selData.mocktails || []).join(', ');
+                            mwrap.appendChild(lists);
+                            mwrap.appendChild(m2);
+                            card.appendChild(mwrap);
+                        } catch (e) { }
+                    }
+
+                    // Actions
+                    var actions = document.createElement('div');
+                    actions.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;align-items:center;';
+
+                    var btnReply = document.createElement('button');
+                    btnReply.className = 'btn-mint';
+                    btnReply.style.cssText = 'font-size:13px;padding:11px 20px;';
+                    btnReply.textContent = 'Reply with quote';
+                    btnReply.addEventListener('click', function () { openReply(q); });
+                    actions.appendChild(btnReply);
+
+                    var btnMenu = document.createElement('button');
+                    btnMenu.className = 'ad-btn';
+                    btnMenu.textContent = q.menu_token ? 'Resend menu link' : 'Send menu link';
+                    btnMenu.addEventListener('click', function () {
+                        if (!confirm('Email a personal menu-builder link to ' + q.email + '?')) return;
+                        btnMenu.disabled = true;
+                        btnMenu.textContent = 'Sending…';
+                        fetch('/api/admin/send_menu_link', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: q.id })
+                        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+                            .then(function (res) {
+                                if (!res.ok) throw new Error(res.j.error || 'Failed');
+                                btnMenu.textContent = 'Link sent ✓';
+                                q.menu_token = q.menu_token || 'sent';
+                            })
+                            .catch(function (e) { alert(e.message); btnMenu.textContent = 'Send menu link'; })
+                            .finally(function () { btnMenu.disabled = false; });
+                    });
+                    actions.appendChild(btnMenu);
+
+                    if (q.menu_token && !q.menu_selection) {
+                        var pill = document.createElement('span');
+                        pill.className = 'ad-pill';
+                        pill.textContent = 'Menu link sent — waiting';
+                        actions.appendChild(pill);
+                    }
+
+                    card.appendChild(actions);
+                    listEl.appendChild(card);
                 });
-                if (res.ok) {
-                    // Optimistic update
-                    const quote = quotes.find(q => q.id === id);
-                    if (quote) quote.status = newStatus;
-                    renderQuotes();
-                    updateStats();
+            }
+
+            // ---------- Reply modal ----------
+            var modal = document.getElementById('replyModal');
+            function openReply(q) {
+                replyId = q.id;
+                document.getElementById('replyTo').textContent = 'To ' + q.name + ' <' + q.email + '>' + (q.event_date ? ' · event on ' + q.event_date : '');
+                document.getElementById('rSubject').value = 'Your Barshtender quote' + (q.event_date ? ' — ' + q.event_date : '');
+                document.getElementById('rPrice').value = '';
+                document.getElementById('rIncludes').value = DEFAULT_INCLUDES;
+                document.getElementById('rMessage').value = '';
+                document.getElementById('replyError').textContent = '';
+                modal.classList.add('open');
+            }
+            document.getElementById('replyClose').addEventListener('click', function () { modal.classList.remove('open'); });
+            modal.addEventListener('mousedown', function (e) { if (e.target === modal) modal.classList.remove('open'); });
+
+            document.getElementById('replySend').addEventListener('click', function () {
+                var btn = this;
+                var payload = {
+                    id: replyId,
+                    subject: document.getElementById('rSubject').value.trim(),
+                    price: document.getElementById('rPrice').value.trim(),
+                    includes: document.getElementById('rIncludes').value,
+                    message: document.getElementById('rMessage').value.trim()
+                };
+                if (!payload.price && !payload.message) {
+                    document.getElementById('replyError').textContent = 'Add a price or a message before sending.';
+                    return;
                 }
-            } catch (err) {
-                alert('Failed to update status');
-            }
-        }
+                btn.disabled = true;
+                btn.textContent = 'Sending…';
+                fetch('/api/admin/reply', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+                    .then(function (res) {
+                        if (!res.ok) throw new Error(res.j.error || 'Failed to send');
+                        modal.classList.remove('open');
+                        load();
+                    })
+                    .catch(function (e) { document.getElementById('replyError').textContent = e.message; })
+                    .finally(function () { btn.disabled = false; btn.textContent = 'Send quote email'; });
+            });
 
-        function updateStats() {
-            document.getElementById('statTotal').innerText = quotes.length;
-            document.getElementById('statPending').innerText = quotes.filter(q => !q.status || q.status === 'new').length;
-
-            // Simple month check
-            const now = new Date();
-            const thisMonth = quotes.filter(q => {
-                const d = new Date(q.created_at);
-                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-            }).length;
-            document.getElementById('statMonth').innerText = thisMonth;
-        }
-
-        function renderQuotes() {
-            const list = document.getElementById('quotesList');
-            if (quotes.length === 0) {
-                list.innerHTML = '<div style="text-align:center; padding: 2rem; color: #666;">No requests yet.</div>';
-                return;
-            }
-
-            list.innerHTML = quotes.map(q => {
-                const status = q.status || 'new';
-                const serviceClass = q.service_type === 'bar-services' ? 'bar-service' : 'workshop-service';
-                const serviceLabel = q.service_type === 'bar-services' ? 'Bar Services' : 'Workshop';
-
-                // Past Event Check
-                const eventDateObj = new Date(q.event_date);
-                const isPast = eventDateObj < new Date().setHours(0, 0, 0, 0);
-                const pastClass = isPast ? 'past-event' : '';
-                const pastLabel = isPast ? '<span style="background:#fee2e2; color:#b91c1c; padding:2px 6px; border-radius:4px; font-size:10px; margin-left:8px; display:inline-block; font-weight:700;">PASSED</span>' : '';
-
-                // Background tints for status
-                let statusBg = '';
-                if (status === 'booked') statusBg = 'background-color: #ecfdf5; border-left: 4px solid #10b981;';
-                if (status === 'contacted') statusBg = 'background-color: #fffbeb; border-left: 4px solid #f59e0b;';
-                if (status === 'new') statusBg = 'border-left: 4px solid #3b82f6;';
-                if (status === 'archived') statusBg = 'opacity: 0.7; background-color: #f3f4f6; border-left: 4px solid #9ca3af;';
-
-                return `
-                <div class="quote-card ${pastClass}" style="${statusBg}">
-                    <div class="quote-header" onclick="this.parentElement.querySelector('.quote-expanded').classList.toggle('open')" style="display:flex; justify-content:space-between; align-items:center;">
-                        <div class="quote-main-info">
-                            <div>
-                                <div class="client-name">
-                                    ${q.name} 
-                                    ${pastLabel}
-                                </div>
-                                <div style="font-size:0.8rem; color:#666">${q.email}</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display:flex; align-items:center; gap:15px;">
-                            <span class="service-badge ${serviceClass}">${serviceLabel}</span>
-                            <div style="text-align:right;">
-                                <div class="quote-date" style="font-weight:600; color:#374151;">${new Date(q.event_date).toLocaleDateString()}</div>
-                                <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #6b7280; margin-top: 2px;">${status}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="quote-expanded">
-                        <div class="details-grid">
-                            <div class="detail-group">
-                                <label>Phone</label>
-                                <p>${q.phone || '-'}</p>
-                            </div>
-                            <div class="detail-group">
-                                <label>Event Date</label>
-                                <p>${q.event_date} ${isPast ? '(Passed)' : ''}</p>
-                            </div>
-                            <div class="detail-group">
-                                <label>Guests</label>
-                                <p>${q.guest_count || '-'}</p>
-                            </div>
-                            <div class="detail-group">
-                                <label>Event Type</label>
-                                <p>${q.event_type || '-'}</p>
-                            </div>
-                            <div class="detail-group">
-                                <label>Location</label>
-                                <p>${q.location || '-'}</p>
-                            </div>
-                             <div class="detail-group">
-                                <label>Created At</label>
-                                <p>${new Date(q.created_at).toLocaleString()}</p>
-                            </div>
-                        </div>
-
-                        <div class="detail-group">
-                            <label>Message</label>
-                            <div class="message-box">${q.message || 'No message provided.'}</div>
-                        </div>
-
-                        <div class="action-bar">
-                            <button class="action-btn" onclick="updateStatus('${q.id}', 'new')">Mark New</button>
-                            <button class="action-btn btn-contact" onclick="updateStatus('${q.id}', 'contacted')">Mark Contacted</button>
-                            <button class="action-btn btn-book" onclick="updateStatus('${q.id}', 'booked')">Mark Booked</button>
-                            <button class="action-btn btn-archive" onclick="updateStatus('${q.id}', 'archived')">Archive</button>
-                        </div>
-                    </div>
-                </div>
-                `;
-            }).join('');
-        }
+            // ---------- Boot: try loading; 401 shows login ----------
+            fetch('/api/admin/quotes').then(function (r) {
+                if (r.status === 401) { showLogin(); return null; }
+                return r.json();
+            }).then(function (data) {
+                if (data) { quotes = Array.isArray(data) ? data : []; showDash(); render(); }
+            }).catch(function () { showLogin(); });
+        })();
     </script>
 </body>
 

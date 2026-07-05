@@ -17,55 +17,10 @@
 //   ADMIN_EMAIL               - where notifications go (default barshtender@gmail.com)
 // ============================================================
 
+import { FONT, escapeHtml, detailRow, mintButton, emailShell, sendViaResend, resendConfigured } from "../lib/email.js";
+import { ensureTables } from "../lib/db.js";
+
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwt7l5cYb25T-GDilDse-afYKPHFXy9WGQGc5MloFs9asl_8QaB-4KEOACBPLKja974zA/exec";
-
-// ---------- Branded email templates (match the site design) ----------
-// bg #0a0913 · card #14101f · mint #cfe8ca · text #f2eee8 · muted #9b97b3
-
-const FONT = "font-family:Archivo,'Helvetica Neue',Helvetica,Arial,sans-serif;";
-
-function escapeHtml(s) {
-    return String(s == null ? "" : s)
-        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
-
-function detailRow(label, value) {
-    if (!value) return "";
-    return '<tr>' +
-        '<td style="' + FONT + 'padding:10px 0;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6f6b85;vertical-align:top;white-space:nowrap;padding-right:24px;">' + escapeHtml(label) + '</td>' +
-        '<td style="' + FONT + 'padding:10px 0;font-size:15px;font-weight:600;color:#f2eee8;vertical-align:top;">' + escapeHtml(value) + '</td>' +
-        '</tr>';
-}
-
-function emailShell(kickerText, headlineHtml, bodyHtml) {
-    return '<div style="margin:0;padding:0;">' +
-        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' +
-        '<tr><td align="center" style="padding:40px 16px;">' +
-        '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">' +
-        '<tr><td style="background-color:#14101f;border:1px solid #2e2a44;border-radius:20px;padding:36px 36px 40px;">' +
-        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="padding:0 0 30px;">' +
-        '<img src="https://barshtender.pages.dev/assets/logo-green-tight.png" alt="Barshtender" height="30" style="display:block;height:30px;width:auto;border:0;">' +
-        '</td></tr></table>' +
-        '<p style="' + FONT + 'margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#cfe8ca;">' + kickerText + '</p>' +
-        '<h1 style="' + FONT + 'margin:0 0 18px;font-size:30px;line-height:1.05;font-weight:900;letter-spacing:-0.5px;color:#f2eee8;">' + headlineHtml + '</h1>' +
-        bodyHtml +
-        '</td></tr>' +
-        '<tr><td align="center" style="padding:28px 12px 0;">' +
-        '<p style="' + FONT + 'margin:0 0 6px;font-size:13px;font-weight:700;color:#3b3a79;">Kosher cocktails, reimagined.</p>' +
-        '<p style="' + FONT + 'margin:0;font-size:12px;line-height:1.6;color:#6f6b85;">Under the supervision of Chabad in South Beach.<br>Serving Miami-Dade &amp; Broward.</p>' +
-        '</td></tr>' +
-        '</table>' +
-        '</td></tr></table>' +
-        '</div>';
-}
-
-function mintButton(href, label) {
-    return '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;"><tr>' +
-        '<td style="background-color:#cfe8ca;border-radius:999px;">' +
-        '<a href="' + href + '" style="' + FONT + 'display:inline-block;padding:14px 28px;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#0a0913;text-decoration:none;">' + label + '</a>' +
-        '</td></tr></table>';
-}
 
 function buildAdminEmail(data) {
     const isBar = data.serviceType === "bar-services";
@@ -160,21 +115,6 @@ function buildClientEmail(data) {
     };
 }
 
-async function sendViaResend(env, message) {
-    const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer " + env.RESEND_API_KEY,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(message)
-    });
-    if (!res.ok) {
-        const body = await res.text();
-        throw new Error("Resend " + res.status + ": " + body);
-    }
-}
-
 // ---------- Request handler ----------
 
 export async function onRequestPost({ request, env }) {
@@ -193,6 +133,7 @@ export async function onRequestPost({ request, env }) {
         let dbSaveError = null;
         if (env.DB) {
             try {
+                await ensureTables(env);
                 const id = crypto.randomUUID();
                 const createdAt = new Date().toISOString();
 
@@ -222,11 +163,11 @@ export async function onRequestPost({ request, env }) {
         }
 
         // 2. Send emails via Resend (when configured)
-        const resendConfigured = Boolean(env.RESEND_API_KEY && env.FROM_EMAIL);
+        const canResend = resendConfigured(env);
         const adminEmail = env.ADMIN_EMAIL || "barshtender@gmail.com";
         let emailError = null;
 
-        if (resendConfigured) {
+        if (canResend) {
             try {
                 const admin = buildAdminEmail(data);
                 const client = buildClientEmail(data);
@@ -259,7 +200,7 @@ export async function onRequestPost({ request, env }) {
         //    logOnly: true  -> Sheets row only (Resend already sent the emails)
         //    logOnly: false -> Sheets row + emails (fallback when Resend is
         //    not configured, or a Resend send failed)
-        const logOnly = resendConfigured && !emailError;
+        const logOnly = canResend && !emailError;
         try {
             await fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
@@ -275,7 +216,7 @@ export async function onRequestPost({ request, env }) {
             status: "success",
             message: "Quote request processed",
             debug_db: dbSaveError ? "DB Save Failed" : "DB Saved",
-            debug_email: resendConfigured ? (emailError ? "Resend failed, Apps Script fallback used" : "Sent via Resend") : "Sent via Apps Script"
+            debug_email: canResend ? (emailError ? "Resend failed, Apps Script fallback used" : "Sent via Resend") : "Sent via Apps Script"
         }), {
             status: 200,
             headers: { "Content-Type": "application/json" },

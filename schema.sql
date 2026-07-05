@@ -13,3 +13,13 @@ CREATE TABLE quotes (
   created_at TEXT,
   status TEXT DEFAULT 'new'
 );
+
+-- Personalized menu-builder links (endpoints also create this on demand,
+-- so existing databases need no manual migration)
+CREATE TABLE IF NOT EXISTS menu_links (
+  token TEXT PRIMARY KEY,
+  quote_id TEXT NOT NULL,
+  created_at TEXT,
+  submitted_at TEXT,
+  selection TEXT
+);

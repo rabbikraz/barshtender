@@ -1,38 +1,29 @@
-export async function onRequestGet({ request, env }) {
-    // 1. Check Auth Cookie
-    const cookieHeader = request.headers.get("Cookie");
-    if (!cookieHeader || !cookieHeader.includes("authorized=true")) {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-            status: 401,
-            headers: { "Content-Type": "application/json" }
-        });
-    }
+import { isAuthorized, json } from "../../lib/email.js";
+import { ensureTables } from "../../lib/db.js";
 
-    // 2. Fetch from D1 Database
+export async function onRequestGet({ request, env }) {
+    if (!isAuthorized(request)) return json({ error: "Unauthorized" }, 401);
+
     try {
         if (!env.DB) {
             // Graceful fallback if DB is not set up yet
-            // Return empty list so admin panel loads but shows nothing
-            return new Response(JSON.stringify([]), {
-                status: 200,
-                headers: { "Content-Type": "application/json" }
-            });
+            return json([]);
         }
 
+        // Ensure tables exist so the join below never fails
+        await ensureTables(env);
+
         const { results } = await env.DB.prepare(
-            "SELECT * FROM quotes ORDER BY created_at DESC"
+            `SELECT q.*, m.token AS menu_token, m.submitted_at AS menu_submitted_at, m.selection AS menu_selection
+             FROM quotes q
+             LEFT JOIN menu_links m ON m.quote_id = q.id
+             ORDER BY q.created_at DESC`
         ).all();
 
-        return new Response(JSON.stringify(results), {
-            status: 200,
-            headers: { "Content-Type": "application/json" }
-        });
+        return json(results);
 
     } catch (err) {
         console.error(err);
-        return new Response(JSON.stringify({ error: "Database error" }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" }
-        });
+        return json({ error: "Database error" }, 500);
     }
 }
