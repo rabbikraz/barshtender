@@ -33,7 +33,7 @@
         '<div style="max-width:340px;">' +
           '<img src="assets/logo-green-tight.png" alt="Barshtender" style="height:30px;width:auto;display:block;margin-bottom:20px;">' +
           '<p style="margin:0;font-size:18px;font-weight:700;letter-spacing:-0.01em;color:#cfe8ca;">Kosher cocktails, perfected.</p>' +
-          '<p style="margin:14px 0 0;font-size:14px;line-height:1.6;color:#9b97b3;">High-end craft cocktails for your simcha. Under the supervision of Chabad in South Beach. Serving Miami-Dade and Broward.</p>' +
+          '<p style="margin:14px 0 0;font-size:14px;line-height:1.6;color:#9b97b3;">High-end artisanal cocktails for your simcha. Under the supervision of Chabad in South Beach. Serving Miami-Dade and Broward.</p>' +
         '</div>' +
         '<div>' +
           '<p style="margin:0 0 18px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#6f6b85;">Explore</p>' +
