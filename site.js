@@ -1,5 +1,5 @@
 /* Barshtender — shared nav + footer, injected on every page.
-   Set the active nav item via <body data-nav="home|drink|services|quote|wishlist"> */
+   Set the active nav item via <body data-nav="home|drink|bar-service|workshops|quote|wishlist"> */
 (function () {
   var active = document.body.getAttribute('data-nav') || '';
 
@@ -8,7 +8,8 @@
       '<a href="index.html" class="bt-nav-logo"><img src="assets/logo-green-tight.png" alt="Barshtender"></a>' +
       '<nav class="bt-nav-links">' +
         '<a data-nav="drink" href="menu.html" class="bt-navlink">Drink Menu</a>' +
-        '<a data-nav="services" href="services.html" class="bt-navlink">Services</a>' +
+        '<a data-nav="bar-service" href="bar-service.html" class="bt-navlink">Bar Service</a>' +
+        '<a data-nav="workshops" href="workshops.html" class="bt-navlink">Workshops</a>' +
         '<a href="quote.html" class="btn-mint bt-cta-desk">Request a Quote</a>' +
         '<button class="bt-burger" aria-label="Menu"><span></span><span></span><span></span></button>' +
       '</nav>' +
@@ -21,7 +22,8 @@
       '<nav>' +
         '<a href="index.html" class="bt-overlay-link">Home</a>' +
         '<a href="menu.html" class="bt-overlay-link">Drink Menu</a>' +
-        '<a href="services.html" class="bt-overlay-link">Services</a>' +
+        '<a href="bar-service.html" class="bt-overlay-link">Bar Service</a>' +
+        '<a href="workshops.html" class="bt-overlay-link">Workshops</a>' +
         '<a href="quote.html" class="btn-mint bt-overlay-cta">Request a Quote</a>' +
       '</nav>' +
     '</div>';
@@ -40,7 +42,8 @@
           '<div style="display:flex;flex-direction:column;gap:12px;">' +
             '<a href="index.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Home</a>' +
             '<a href="menu.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Drink Menu</a>' +
-            '<a href="services.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Services</a>' +
+            '<a href="bar-service.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Bar Service</a>' +
+            '<a href="workshops.html" class="hov-mint" style="text-decoration:none;color:#cdc9dc;font-size:15px;font-weight:500;">Workshops</a>' +
           '</div>' +
         '</div>' +
         '<div>' +

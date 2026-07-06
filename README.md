@@ -34,7 +34,9 @@ npx wrangler d1 execute barshtender-db --local --file=schema.sql
 
 - **Home** (`index.html`) — hero, showstoppers, signature drinks, services overview
 - **Drink Menu** (`menu.html`) — full menu grouped by spirit with filter chips
-- **Services** (`services.html`) — event bar service details + cocktail workshops
+- **Bar Service** (`bar-service.html`) — event bar service details
+- **Workshops** (`workshops.html`) — hands-on cocktail workshops
+- **Services** (`services.html`) — legacy URL, redirects to `bar-service.html`
 - **Request a Quote** (`quote.html`) — two-step quote form, posts to `/api/submit`
 - **Wishlist** (`wishlist.html`) — pick drinks (saved in localStorage), share via WhatsApp
 - **Pesach** (`pesach.html`) — seasonal kosher-for-Pesach page
