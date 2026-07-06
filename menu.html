@@ -20,8 +20,8 @@
             <div style="position:absolute;top:-10%;left:-6%;width:40vw;height:40vw;max-width:540px;max-height:540px;border-radius:50%;background:radial-gradient(circle,rgba(91,89,184,0.45),transparent 64%);filter:blur(44px);animation:btDrift 18s ease-in-out infinite;pointer-events:none;"></div>
             <div style="position:relative;max-width:1240px;margin:0 auto;">
                 <p style="margin:0 0 18px;font-size:13px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#cfe8ca;">The Drink Menu</p>
-                <h1 style="margin:0;font-size:clamp(40px,8vw,104px);line-height:0.94;font-weight:900;letter-spacing:-0.03em;max-width:14ch;">Every pour, fully kosher.</h1>
-                <p style="margin:24px 0 0;font-size:clamp(16px,1.8vw,21px);line-height:1.55;color:#9b97b3;max-width:50ch;">Grouped by base spirit, mocktails included. Tap a spirit to filter. Pricing is quote-only.</p>
+                <h1 style="margin:0;font-size:clamp(40px,8vw,104px);line-height:0.94;font-weight:900;letter-spacing:-0.03em;max-width:14ch;">Every pour, bespoke.</h1>
+                <p style="margin:24px 0 0;font-size:clamp(16px,1.8vw,21px);line-height:1.55;color:#9b97b3;max-width:50ch;">Grouped by base spirit, mocktails included, every drink supervised by Chabad in South Beach. Tap a spirit to filter. Pricing is quote-only.</p>
             </div>
         </header>
 
@@ -29,7 +29,7 @@
         <section style="position:relative;padding:clamp(40px,6vw,72px) clamp(20px,5vw,64px) clamp(24px,4vw,48px);">
             <div style="max-width:1240px;margin:0 auto;">
                 <div class="bt-reveal" style="margin-bottom:26px;">
-                    <h2 style="margin:0;font-size:clamp(20px,3vw,30px);font-weight:800;letter-spacing:-0.02em;">Popular right now</h2>
+                    <h2 style="margin:0;font-size:clamp(20px,3vw,30px);font-weight:800;letter-spacing:-0.02em;">Most requested</h2>
                 </div>
                 <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;">
                     <div class="bt-reveal" style="flex:1 1 250px;max-width:340px;padding:22px;border-radius:14px;background:linear-gradient(165deg,rgba(91,89,184,0.16),rgba(255,255,255,0.02));border:1px solid rgba(207,232,202,0.16);"><h4 style="margin:0 0 8px;font-size:18px;font-weight:700;">Spicy Mangorita</h4><p style="margin:0;font-size:14px;line-height:1.5;color:#9b97b3;">Mango margarita with muddled jalapeno and fresno.</p></div>
@@ -61,27 +61,63 @@
         (function () {
             var GROUPS = [
                 { key: 'vodka', label: 'Vodka', items: [
-                    { name: 'Lychee Martini' }, { name: 'Lemon Drop Martini' }, { name: 'Cosmo' },
-                    { name: 'Sea Breeze' }, { name: 'White Russian', note: 'dairy' }, { name: 'Mocha Russian', note: 'dairy' },
-                    { name: 'Moscow Mule' }, { name: 'Date in Moscow' }, { name: 'Hibiscus Mule' }] },
+                    { name: 'Lychee Martini', ing: 'vodka, lychee, lime' },
+                    { name: 'Lemon Drop Martini', ing: 'vodka, fresh lemon, sugared rim' },
+                    { name: 'Cosmo', ing: 'vodka, triple sec, cranberry, lime' },
+                    { name: 'Sea Breeze', ing: 'vodka, cranberry, grapefruit' },
+                    { name: 'White Russian', note: 'dairy', ing: 'vodka, coffee liqueur, cream' },
+                    { name: 'Mocha Russian', note: 'dairy', ing: 'vodka, coffee liqueur, chocolate, cream' },
+                    { name: 'Moscow Mule', ing: 'vodka, lime, ginger beer' },
+                    { name: 'Date in Moscow', ing: 'vodka, date syrup, lime, ginger beer' },
+                    { name: 'Hibiscus Mule', ing: 'vodka, hibiscus, lime, ginger beer' }] },
                 { key: 'rum', label: 'Rum', items: [
-                    { name: 'Hurricane' }, { name: 'Mojito' }, { name: 'Passionfruit Mojito' }, { name: 'Daiquiri' },
-                    { name: 'Hibiscus Daiquiri' }, { name: 'Passionfruit Daiquiri' }, { name: 'Mai Tai' }, { name: 'Rum Old Fashioned' },
-                    { name: "Dark 'n Stormy" }, { name: 'Pina Colada' }, { name: 'Frozen Daiquiri' }, { name: 'Baja Peach', note: 'peach + poblano' }] },
+                    { name: 'Hurricane', ing: 'rum, passionfruit, orange, grenadine' },
+                    { name: 'Mojito', ing: 'rum, mint, lime, soda' },
+                    { name: 'Passionfruit Mojito', ing: 'rum, passionfruit, mint, lime' },
+                    { name: 'Daiquiri', ing: 'rum, lime, sugar' },
+                    { name: 'Hibiscus Daiquiri', ing: 'rum, hibiscus, lime' },
+                    { name: 'Passionfruit Daiquiri', ing: 'rum, passionfruit, lime' },
+                    { name: 'Mai Tai', ing: 'rum, orange liqueur, lime, orgeat' },
+                    { name: 'Rum Old Fashioned', ing: 'aged rum, sugar, bitters' },
+                    { name: "Dark 'n Stormy", ing: 'dark rum, ginger beer, lime' },
+                    { name: 'Pina Colada', ing: 'rum, pineapple, coconut cream' },
+                    { name: 'Frozen Daiquiri', ing: 'rum, lime, sugar, crushed ice' },
+                    { name: 'Baja Peach', ing: 'rum, peach, poblano, lime' }] },
                 { key: 'gin', label: 'Gin', items: [
-                    { name: 'Gin Gin Mule' }, { name: 'Gimlet' }, { name: 'Bramble' }, { name: 'Gin Pesto' }, { name: 'Clover Club' },
-                    { name: 'Bees Knees' }, { name: 'French 75' }, { name: 'Cucumber Gin and Tonic' }, { name: 'The Elderly Flower' }] },
+                    { name: 'Gin Gin Mule', ing: 'gin, mint, lime, ginger beer' },
+                    { name: 'Gimlet', ing: 'gin, lime, sugar' },
+                    { name: 'Bramble', ing: 'gin, lemon, blackberry' },
+                    { name: 'Gin Pesto', ing: 'gin, basil, lemon' },
+                    { name: 'Clover Club', ing: 'gin, raspberry, lemon, silky foam' },
+                    { name: 'Bees Knees', ing: 'gin, honey, lemon' },
+                    { name: 'French 75', ing: 'gin, lemon, sugar, bubbly' },
+                    { name: 'Cucumber Gin and Tonic', ing: 'gin, cucumber, tonic' },
+                    { name: 'The Elderly Flower', ing: 'gin, elderflower, lemon' }] },
                 { key: 'tequila', label: 'Tequila', items: [
-                    { name: 'Palomita', note: 'grapefruit' }, { name: 'Spicy Margarita' }, { name: 'Spicy Mango Margarita' },
-                    { name: 'Passionfruit Margarita' }, { name: 'Oaxacan Old Fashioned' }] },
+                    { name: 'Palomita', ing: 'tequila, grapefruit, lime, soda' },
+                    { name: 'Spicy Margarita', ing: 'tequila, lime, jalapeno' },
+                    { name: 'Spicy Mango Margarita', ing: 'tequila, mango, lime, jalapeno' },
+                    { name: 'Passionfruit Margarita', ing: 'tequila, passionfruit, lime' },
+                    { name: 'Oaxacan Old Fashioned', ing: 'tequila, mezcal, agave, bitters' }] },
                 { key: 'whiskey', label: 'Whiskey', items: [
-                    { name: 'Maple Whiskey Sour' }, { name: 'New York Sour' }, { name: 'Gold Rush' }, { name: 'Old Fashioned' },
-                    { name: 'Penicillin' }, { name: 'Brown Derby' }, { name: 'Smoked Old Fashioned' }, { name: 'Whiskey Peach Smash' },
-                    { name: 'Amaretto Sour' }] },
+                    { name: 'Maple Whiskey Sour', ing: 'whiskey, lemon, maple' },
+                    { name: 'New York Sour', ing: 'whiskey, lemon, red wine float' },
+                    { name: 'Gold Rush', ing: 'bourbon, honey, lemon' },
+                    { name: 'Old Fashioned', ing: 'whiskey, sugar, bitters' },
+                    { name: 'Penicillin', ing: 'scotch, honey, ginger, lemon' },
+                    { name: 'Brown Derby', ing: 'bourbon, grapefruit, honey' },
+                    { name: 'Smoked Old Fashioned', ing: 'whiskey, bitters, real wood smoke' },
+                    { name: 'Whiskey Peach Smash', ing: 'whiskey, peach, mint, lemon' },
+                    { name: 'Amaretto Sour', ing: 'amaretto, lemon, silky foam' }] },
                 { key: 'arak', label: 'Arak', items: [
-                    { name: 'Casablanca Mule' }, { name: 'Licorice Stick' }, { name: 'Arak Grapefruit Cocktail' }] },
+                    { name: 'Casablanca Mule', ing: 'arak, mint, lime, ginger beer' },
+                    { name: 'Licorice Stick', ing: 'arak, lemon, sugar' },
+                    { name: 'Arak Grapefruit Cocktail', ing: 'arak, grapefruit, lime' }] },
                 { key: 'mocktails', label: 'Mocktails', items: [
-                    { name: 'Shirley Temple' }, { name: 'Mango Peach Gingerada' }, { name: 'Hibiscus Limonada' }, { name: 'Lychee No-tini' }] }
+                    { name: 'Shirley Temple', ing: 'ginger ale, grenadine, cherry' },
+                    { name: 'Mango Peach Gingerada', ing: 'mango, peach, ginger, lime' },
+                    { name: 'Hibiscus Limonada', ing: 'hibiscus, fresh lemon, soda' },
+                    { name: 'Lychee No-tini', ing: 'lychee, lime, zero proof' }] }
             ];
 
             var active = 'all';
@@ -126,15 +162,24 @@
                     grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;';
                     g.items.forEach(function (d) {
                         var card = document.createElement('div');
-                        card.style.cssText = 'display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:16px 18px;border-radius:12px;background:rgba(255,255,255,0.025);border:1px solid rgba(207,232,202,0.08);';
+                        card.style.cssText = 'display:flex;flex-direction:column;gap:5px;padding:16px 18px;border-radius:12px;background:rgba(255,255,255,0.025);border:1px solid rgba(207,232,202,0.08);';
+                        var row = document.createElement('div');
+                        row.style.cssText = 'display:flex;align-items:baseline;justify-content:space-between;gap:10px;';
                         var name = document.createElement('span');
                         name.style.cssText = 'font-size:16px;font-weight:600;color:#f2eee8;';
                         name.textContent = d.name;
                         var note = document.createElement('span');
                         note.style.cssText = 'font-size:12px;color:#8b88a0;text-align:right;white-space:nowrap;';
                         note.textContent = d.note || '';
-                        card.appendChild(name);
-                        card.appendChild(note);
+                        row.appendChild(name);
+                        if (d.note) row.appendChild(note);
+                        card.appendChild(row);
+                        if (d.ing) {
+                            var ing = document.createElement('span');
+                            ing.style.cssText = 'font-size:12.5px;line-height:1.4;color:#8b88a0;';
+                            ing.textContent = d.ing;
+                            card.appendChild(ing);
+                        }
                         grid.appendChild(card);
                     });
 

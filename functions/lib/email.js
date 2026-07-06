@@ -42,7 +42,7 @@ export function emailShell(kickerText, headlineHtml, bodyHtml) {
         bodyHtml +
         '</td></tr>' +
         '<tr><td align="center" style="padding:28px 12px 0;">' +
-        '<p style="' + FONT + 'margin:0 0 6px;font-size:13px;font-weight:700;color:#3b3a79;">Kosher cocktails, reimagined.</p>' +
+        '<p style="' + FONT + 'margin:0 0 6px;font-size:13px;font-weight:700;color:#3b3a79;">Kosher cocktails, perfected.</p>' +
         '<p style="' + FONT + 'margin:0;font-size:12px;line-height:1.6;color:#6f6b85;">Under the supervision of Chabad in South Beach.<br>Serving Miami-Dade &amp; Broward.</p>' +
         '</td></tr>' +
         '</table>' +

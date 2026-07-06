@@ -1,6 +1,6 @@
 # Barshtender Website
 
-Kosher cocktails, reimagined.
+Kosher cocktails, perfected.
 
 Dark, modern design system: bg `#0a0913`, mint accent `#cfe8ca`, purple `#5b59b8`, Archivo typeface. Source of truth for the design lives in the Claude Design project "Design parameters overview".
 
