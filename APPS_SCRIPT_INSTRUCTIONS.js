@@ -100,7 +100,7 @@ function doPost(e) {
 
         // ---------- 1. Notification to Barshtender ----------
         const adminEmail = "barshtender@gmail.com";
-        const subject = "New quote request — " + data.name + " (" + serviceLabel + ")";
+        const subject = "New quote request: " + data.name + " (" + serviceLabel + ")";
 
         const adminDetailsRows =
             btRow_("Service", serviceLabel) +
@@ -149,7 +149,7 @@ function doPost(e) {
         });
 
         // ---------- 2. Confirmation to the client ----------
-        const clientSubject = "Request received — Barshtender";
+        const clientSubject = "Request received - Barshtender";
 
         const clientDetailsRows =
             btRow_("Service", serviceLabel) +

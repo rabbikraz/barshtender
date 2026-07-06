@@ -40,11 +40,11 @@ export async function onRequestPost({ request, env }) {
         const html = emailShell(
             "Deposit received",
             "You're locked in, " + escapeHtml(firstName) + ".",
-            '<p style="' + FONT + 'margin:0 0 18px;font-size:16px;line-height:1.6;color:#9b97b3;">Thank you — your deposit came through and <span style="color:#f2eee8;font-weight:700;">your date is secured</span>' + (quote.event_date ? ' for <span style="color:#f2eee8;font-weight:700;">' + escapeHtml(quote.event_date) + '</span>' : '') + '.</p>' +
+            '<p style="' + FONT + 'margin:0 0 18px;font-size:16px;line-height:1.6;color:#9b97b3;">Thank you! Your deposit came through and <span style="color:#f2eee8;font-weight:700;">your date is secured</span>' + (quote.event_date ? ' for <span style="color:#f2eee8;font-weight:700;">' + escapeHtml(quote.event_date) + '</span>' : '') + '.</p>' +
             '<p style="' + FONT + 'margin:0 0 18px;font-size:16px;line-height:1.6;color:#9b97b3;">Now the fun part: let\'s build your menu. Browse the full drink list and choose either:</p>' +
             '<p style="' + FONT + 'margin:0;padding:14px 0;border-top:1px solid #2e2a44;border-bottom:1px solid #221d35;font-size:15px;font-weight:700;color:#f2eee8;">4 cocktails &nbsp;+&nbsp; 1 mocktail</p>' +
             '<p style="' + FONT + 'margin:0 0 4px;padding:14px 0;border-bottom:1px solid #2e2a44;font-size:15px;font-weight:700;color:#f2eee8;">3 cocktails &nbsp;+&nbsp; 2 mocktails</p>' +
-            '<p style="' + FONT + 'margin:18px 0 0;font-size:15px;line-height:1.6;color:#9b97b3;">Have something in mind that isn\'t on the list? You can add your own — we will build it.</p>' +
+            '<p style="' + FONT + 'margin:18px 0 0;font-size:15px;line-height:1.6;color:#9b97b3;">Have something in mind that isn\'t on the list? You can add your own. We will build it.</p>' +
             mintButton(url, "Build my menu") +
             '<p style="' + FONT + 'margin:24px 0 0;font-size:13px;line-height:1.6;color:#6f6b85;">This link is personal to your event. If the button doesn\'t work, copy this address:<br><a href="' + url + '" style="color:#8b88a0;">' + url + '</a></p>' +
             '<p style="' + FONT + 'margin:28px 0 0;font-size:15px;line-height:1.6;color:#9b97b3;">L\'chaim,<br><span style="color:#f2eee8;font-weight:700;">The Barshtender Team</span></p>'
@@ -52,7 +52,7 @@ export async function onRequestPost({ request, env }) {
 
         const text =
             "Hi " + quote.name + ",\n\n" +
-            "Thank you - your deposit came through and your date is secured" + (quote.event_date ? " for " + quote.event_date : "") + ".\n\n" +
+            "Thank you! Your deposit came through and your date is secured" + (quote.event_date ? " for " + quote.event_date : "") + ".\n\n" +
             "Now the fun part: build your drink menu! Choose either 4 cocktails + 1 mocktail, or 3 cocktails + 2 mocktails. " +
             "And if you have something in mind that isn't on the list, you can add your own.\n\n" +
             "Build your menu here: " + url + "\n\n" +
@@ -62,7 +62,7 @@ export async function onRequestPost({ request, env }) {
             from: env.FROM_EMAIL,
             to: [quote.email],
             reply_to: adminEmail,
-            subject: "Deposit received — let's build your menu",
+            subject: "Deposit received! Let's build your menu",
             html: html,
             text: text
         });

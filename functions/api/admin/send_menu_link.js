@@ -41,10 +41,10 @@ export async function onRequestPost({ request, env }) {
         const html = emailShell(
             "Design your menu",
             "Pick your pours, " + escapeHtml(firstName) + ".",
-            '<p style="' + FONT + 'margin:0 0 18px;font-size:16px;line-height:1.6;color:#9b97b3;">Time for the fun part. We put together a personal menu builder for your event — browse the full drink list and choose either:</p>' +
+            '<p style="' + FONT + 'margin:0 0 18px;font-size:16px;line-height:1.6;color:#9b97b3;">Time for the fun part. We put together a personal menu builder for your event. Browse the full drink list and choose either:</p>' +
             '<p style="' + FONT + 'margin:0;padding:14px 0;border-top:1px solid #2e2a44;border-bottom:1px solid #221d35;font-size:15px;font-weight:700;color:#f2eee8;">4 cocktails &nbsp;+&nbsp; 1 mocktail</p>' +
             '<p style="' + FONT + 'margin:0 0 4px;padding:14px 0;border-bottom:1px solid #2e2a44;font-size:15px;font-weight:700;color:#f2eee8;">3 cocktails &nbsp;+&nbsp; 2 mocktails</p>' +
-            '<p style="' + FONT + 'margin:18px 0 0;font-size:15px;line-height:1.6;color:#9b97b3;">Have something in mind that isn\'t on the list? You can add your own — we will build it.</p>' +
+            '<p style="' + FONT + 'margin:18px 0 0;font-size:15px;line-height:1.6;color:#9b97b3;">Have something in mind that isn\'t on the list? You can add your own. We will build it.</p>' +
             mintButton(url, "Build my menu") +
             '<p style="' + FONT + 'margin:24px 0 0;font-size:13px;line-height:1.6;color:#6f6b85;">This link is personal to your event. If the button doesn\'t work, copy this address:<br><a href="' + url + '" style="color:#8b88a0;">' + url + '</a></p>'
         );
@@ -61,7 +61,7 @@ export async function onRequestPost({ request, env }) {
             from: env.FROM_EMAIL,
             to: [quote.email],
             reply_to: adminEmail,
-            subject: "Build your drink menu — Barshtender",
+            subject: "Build your drink menu - Barshtender",
             html: html,
             text: text
         });

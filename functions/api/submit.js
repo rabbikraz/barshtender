@@ -64,7 +64,7 @@ function buildAdminEmail(data) {
         "Message: " + (data.message || "N/A");
 
     return {
-        subject: "New quote request — " + data.name + " (" + serviceLabel + ")",
+        subject: "New quote request: " + data.name + " (" + serviceLabel + ")",
         html: html,
         text: text
     };
@@ -109,7 +109,7 @@ function buildClientEmail(data) {
         "L'chaim,\nThe Barshtender Team";
 
     return {
-        subject: "Request received — Barshtender",
+        subject: "Request received - Barshtender",
         html: html,
         text: text
     };

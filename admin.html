@@ -78,7 +78,7 @@
             <label class="flabel">Subject</label>
             <input class="field" id="rSubject" type="text" style="margin-bottom:16px;">
 
-            <label class="flabel">Price / the numbers <span style="text-transform:none;letter-spacing:0;color:#6f6b85;">(shown big — e.g. "$1,200" or "$950 – $1,200")</span></label>
+            <label class="flabel">Price / the numbers <span style="text-transform:none;letter-spacing:0;color:#6f6b85;">(shown big, e.g. "$1,200" or "$950 – $1,200")</span></label>
             <input class="field" id="rPrice" type="text" placeholder="$" style="margin-bottom:16px;">
 
             <label class="flabel">What's included <span style="text-transform:none;letter-spacing:0;color:#6f6b85;">(one item per line)</span></label>
@@ -333,7 +333,7 @@
                     if (q.menu_token && !q.menu_selection) {
                         var pill = document.createElement('span');
                         pill.className = 'ad-pill';
-                        pill.textContent = 'Menu link sent — waiting';
+                        pill.textContent = 'Menu link sent, waiting';
                         actions.appendChild(pill);
                     }
 
@@ -347,7 +347,7 @@
             function openReply(q) {
                 replyId = q.id;
                 document.getElementById('replyTo').textContent = 'To ' + q.name + ' <' + q.email + '>' + (q.event_date ? ' · event on ' + q.event_date : '');
-                document.getElementById('rSubject').value = 'Your Barshtender quote' + (q.event_date ? ' — ' + q.event_date : '');
+                document.getElementById('rSubject').value = 'Your Barshtender quote' + (q.event_date ? ' - ' + q.event_date : '');
                 document.getElementById('rPrice').value = '';
                 document.getElementById('rIncludes').value = DEFAULT_INCLUDES;
                 document.getElementById('rMessage').value = '';

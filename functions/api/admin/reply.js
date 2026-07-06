@@ -95,7 +95,7 @@ export async function onRequestPost({ request, env }) {
             from: env.FROM_EMAIL,
             to: [quote.email],
             reply_to: adminEmail,
-            subject: subject || ("Your Barshtender quote" + (quote.event_date ? " — " + quote.event_date : "")),
+            subject: subject || ("Your Barshtender quote" + (quote.event_date ? " - " + quote.event_date : "")),
             html: html,
             text: text
         });

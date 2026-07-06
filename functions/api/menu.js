@@ -97,7 +97,7 @@ export async function onRequestPost({ request, env }) {
                     from: env.FROM_EMAIL,
                     to: [adminEmail],
                     reply_to: link.email,
-                    subject: "Menu submitted — " + link.name,
+                    subject: "Menu submitted: " + link.name,
                     html: html,
                     text: "Menu submitted by " + link.name + "\n\nPackage: " + pkg + "\nCocktails: " + cocktails.join(", ") + "\nMocktails: " + mocktails.join(", ")
                 });

@@ -47,7 +47,7 @@
 
                 <!-- Package choice -->
                 <div style="margin-bottom:10px;">
-                    <p style="margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#cfe8ca;">Step 1 — Pick your package</p>
+                    <p style="margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#cfe8ca;">Step 1: Pick your package</p>
                     <div style="display:flex;flex-wrap:wrap;gap:14px;">
                         <button type="button" class="mb-pkg" data-pkg="4-1">
                             <span style="display:block;font-size:19px;font-weight:800;margin-bottom:4px;">4 cocktails + 1 mocktail</span>
@@ -69,7 +69,7 @@
                     <span class="ferr" id="mbError"></span>
                 </div>
 
-                <p style="margin:8px 0 0;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#cfe8ca;">Step 2 — Tap your drinks</p>
+                <p style="margin:8px 0 0;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#cfe8ca;">Step 2: Tap your drinks</p>
                 <div id="mbGroups"></div>
 
             </div>
@@ -131,7 +131,7 @@
                 if (idx >= 0) arr.splice(idx, 1);
                 else {
                     var max = kind === 'c' ? l.c : l.m;
-                    if (arr.length >= max) { elError.textContent = 'You already picked ' + max + ' ' + (kind === 'c' ? 'cocktails' : 'mocktail' + (max > 1 ? 's' : '')) + ' — unselect one to swap.'; return; }
+                    if (arr.length >= max) { elError.textContent = 'You already picked ' + max + ' ' + (kind === 'c' ? 'cocktails' : 'mocktail' + (max > 1 ? 's' : '')) + '. Unselect one to swap.'; return; }
                     arr.push(name);
                 }
                 render();
@@ -258,7 +258,7 @@
                         document.getElementById('mbTitle').textContent = 'Pick your pours, ' + info.name + '.';
                     }
                     if (info.eventDate) {
-                        document.getElementById('mbIntro').textContent = 'For your event on ' + info.eventDate + ' — choose your package, then tap the drinks you want.';
+                        document.getElementById('mbIntro').textContent = 'For your event on ' + info.eventDate + ': choose your package, then tap the drinks you want.';
                     }
                     // Restore a previous submission for editing
                     if (info.selection) {
