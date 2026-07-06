@@ -44,13 +44,13 @@
         <!-- FILTERABLE FULL MENU -->
         <section style="position:relative;padding:clamp(24px,4vw,40px) clamp(20px,5vw,64px) clamp(72px,9vw,120px);">
             <div style="max-width:1240px;margin:0 auto;">
-                <div style="position:sticky;top:72px;z-index:40;padding:18px 0;margin-bottom:18px;background:linear-gradient(180deg,#0a0913 70%,transparent);">
+                <div style="position:sticky;top:72px;z-index:40;padding:18px 0;margin-bottom:6px;background:linear-gradient(180deg,#0a0913 70%,transparent);">
                     <div id="chips" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
                 </div>
 
-                <div id="menuGroups"></div>
+                <p style="margin:0 0 26px;font-size:15px;font-style:italic;color:#8b88a0;">Have something in mind that's not on the list? <a href="quote.html" class="link-mint" style="font-style:normal;font-size:14px;">Reach out</a> &mdash; we're always happy to innovate.</p>
 
-                <p style="margin:8px 0 0;font-size:16px;font-style:italic;color:#8b88a0;">Menus are fully customizable. Have something in mind? We will build it.</p>
+                <div id="menuGroups"></div>
             </div>
         </section>
 
@@ -61,9 +61,9 @@
         (function () {
             var GROUPS = [
                 { key: 'vodka', label: 'Vodka', items: [
-                    { name: 'Lychee Martini', ing: 'vodka, lychee, lime' },
-                    { name: 'Lemon Drop Martini', ing: 'vodka, fresh lemon, sugared rim' },
-                    { name: 'Cosmo', ing: 'vodka, triple sec, cranberry, lime' },
+                    { name: 'Lychee Martini', ing: 'vodka, lychee, triple sec' },
+                    { name: 'Lemon Drop Martini', ing: 'vodka, lemon, triple sec' },
+                    { name: 'Cosmo', ing: 'vodka, cranberry, triple sec, lime' },
                     { name: 'Sea Breeze', ing: 'vodka, cranberry, grapefruit' },
                     { name: 'White Russian', note: 'dairy', ing: 'vodka, coffee liqueur, cream' },
                     { name: 'Mocha Russian', note: 'dairy', ing: 'vodka, coffee liqueur, chocolate, cream' },
@@ -81,7 +81,6 @@
                     { name: 'Rum Old Fashioned', ing: 'aged rum, sugar, bitters' },
                     { name: "Dark 'n Stormy", ing: 'dark rum, ginger beer, lime' },
                     { name: 'Pina Colada', ing: 'rum, pineapple, coconut cream' },
-                    { name: 'Frozen Daiquiri', ing: 'rum, lime, sugar, crushed ice' },
                     { name: 'Baja Peach', ing: 'rum, peach, poblano, lime' }] },
                 { key: 'gin', label: 'Gin', items: [
                     { name: 'Gin Gin Mule', ing: 'gin, mint, lime, ginger beer' },
@@ -90,14 +89,14 @@
                     { name: 'Gin Pesto', ing: 'gin, basil, lemon' },
                     { name: 'Clover Club', ing: 'gin, raspberry, lemon, silky foam' },
                     { name: 'Bees Knees', ing: 'gin, honey, lemon' },
-                    { name: 'French 75', ing: 'gin, lemon, sugar, bubbly' },
+                    { name: 'French 75', ing: 'gin, lemon, sugar, prosecco' },
                     { name: 'Cucumber Gin and Tonic', ing: 'gin, cucumber, tonic' },
-                    { name: 'The Elderly Flower', ing: 'gin, elderflower, lemon' }] },
+                    { name: 'The Elderly Flower', ing: 'gin, elderflower tonic, lime' }] },
                 { key: 'tequila', label: 'Tequila', items: [
                     { name: 'Palomita', ing: 'tequila, grapefruit, lime, soda' },
-                    { name: 'Spicy Margarita', ing: 'tequila, lime, jalapeno' },
-                    { name: 'Spicy Mango Margarita', ing: 'tequila, mango, lime, jalapeno' },
-                    { name: 'Passionfruit Margarita', ing: 'tequila, passionfruit, lime' },
+                    { name: 'Margarita', sub: 'spicy optional', ing: 'tequila, lime' },
+                    { name: 'Mango Margarita', sub: 'spicy optional', ing: 'tequila, mango, lime' },
+                    { name: 'Passionfruit Margarita', sub: 'spicy optional', ing: 'tequila, passionfruit, lime' },
                     { name: 'Oaxacan Old Fashioned', ing: 'tequila, mezcal, agave, bitters' }] },
                 { key: 'whiskey', label: 'Whiskey', items: [
                     { name: 'Maple Whiskey Sour', ing: 'whiskey, lemon, maple' },
@@ -112,10 +111,10 @@
                 { key: 'arak', label: 'Arak', items: [
                     { name: 'Casablanca Mule', ing: 'arak, mint, lime, ginger beer' },
                     { name: 'Licorice Stick', ing: 'arak, lemon, sugar' },
-                    { name: 'Arak Grapefruit Cocktail', ing: 'arak, grapefruit, lime' }] },
+                    { name: 'Eshkolit', ing: 'arak, grapefruit, lime' }] },
                 { key: 'mocktails', label: 'Mocktails', items: [
                     { name: 'Shirley Temple', ing: 'ginger ale, grenadine, cherry' },
-                    { name: 'Mango Peach Gingerada', ing: 'mango, peach, ginger, lime' },
+                    { name: 'Mango Peach Gingerada', ing: 'mango, peach, orange, ginger, lime' },
                     { name: 'Hibiscus Limonada', ing: 'hibiscus, fresh lemon, soda' },
                     { name: 'Lychee No-tini', ing: 'lychee, lime, zero proof' }] }
             ];
@@ -168,6 +167,12 @@
                         var name = document.createElement('span');
                         name.style.cssText = 'font-size:16px;font-weight:600;color:#f2eee8;';
                         name.textContent = d.name;
+                        if (d.sub) {
+                            var sub = document.createElement('span');
+                            sub.style.cssText = 'font-size:12px;font-weight:500;color:#8b88a0;margin-left:6px;white-space:nowrap;';
+                            sub.textContent = '(' + d.sub + ')';
+                            name.appendChild(sub);
+                        }
                         var note = document.createElement('span');
                         note.style.cssText = 'font-size:12px;color:#8b88a0;text-align:right;white-space:nowrap;';
                         note.textContent = d.note || '';
