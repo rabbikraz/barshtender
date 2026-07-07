@@ -340,6 +340,31 @@
                         actions.appendChild(pill);
                     }
 
+                    var btnDelete = document.createElement('button');
+                    btnDelete.className = 'ad-btn';
+                    btnDelete.style.cssText = 'margin-left:auto;color:#e8a0a0;border-color:rgba(232,160,160,0.35);';
+                    btnDelete.textContent = 'Delete';
+                    btnDelete.addEventListener('click', function () {
+                        if (!confirm('Permanently delete the quote from ' + q.name + '? This cannot be undone.')) return;
+                        btnDelete.disabled = true;
+                        btnDelete.textContent = 'Deleting…';
+                        fetch('/api/admin/delete', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: q.id })
+                        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+                            .then(function (res) {
+                                if (!res.ok) throw new Error(res.j.error || 'Failed');
+                                load();
+                            })
+                            .catch(function (e) {
+                                alert(e.message);
+                                btnDelete.disabled = false;
+                                btnDelete.textContent = 'Delete';
+                            });
+                    });
+                    actions.appendChild(btnDelete);
+
                     card.appendChild(actions);
                     listEl.appendChild(card);
                 });
