@@ -17,6 +17,13 @@
         .mb-add { display: flex; gap: 10px; margin-top: 14px; }
         .mb-add input { flex: 1; }
         .mb-add button { flex: none; }
+        .mb-drink { text-align: left; cursor: pointer; font-family: Archivo, sans-serif; display: flex; flex-direction: column; gap: 4px; padding: 13px 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(207,232,202,0.16); color: #f2eee8; transition: border-color .18s, background .18s, color .18s; }
+        .mb-drink:hover { border-color: #cfe8ca; }
+        .mb-drink .mb-name { font-size: 15px; font-weight: 700; }
+        .mb-drink .mb-sub { font-size: 12px; font-weight: 500; color: #8b88a0; }
+        .mb-drink .mb-ing { font-size: 12px; line-height: 1.35; color: #8b88a0; }
+        .mb-drink.on { background: #cfe8ca; border-color: #cfe8ca; color: #0a0913; }
+        .mb-drink.on .mb-sub, .mb-drink.on .mb-ing { color: #3b3a79; }
     </style>
 </head>
 
@@ -91,14 +98,64 @@
     <script>
         (function () {
             var COCKTAIL_GROUPS = [
-                { label: 'Vodka', items: ['Lychee Martini', 'Lemon Drop Martini', 'Cosmo', 'Sea Breeze', 'White Russian', 'Mocha Russian', 'Moscow Mule', 'Date in Moscow', 'Hibiscus Mule'] },
-                { label: 'Rum', items: ['Hurricane', 'Mojito', 'Passionfruit Mojito', 'Daiquiri', 'Hibiscus Daiquiri', 'Passionfruit Daiquiri', 'Mai Tai', 'Rum Old Fashioned', "Dark 'n Stormy", 'Pina Colada', 'Frozen Daiquiri', 'Baja Peach'] },
-                { label: 'Gin', items: ['Gin Gin Mule', 'Gimlet', 'Bramble', 'Gin Pesto', 'Clover Club', 'Bees Knees', 'French 75', 'Cucumber Gin and Tonic', 'The Elderly Flower'] },
-                { label: 'Tequila', items: ['Palomita', 'Spicy Margarita', 'Spicy Mango Margarita', 'Passionfruit Margarita', 'Oaxacan Old Fashioned'] },
-                { label: 'Whiskey', items: ['Maple Whiskey Sour', 'New York Sour', 'Gold Rush', 'Old Fashioned', 'Penicillin', 'Brown Derby', 'Smoked Old Fashioned', 'Whiskey Peach Smash', 'Amaretto Sour'] },
-                { label: 'Arak', items: ['Casablanca Mule', 'Licorice Stick', 'Arak Grapefruit Cocktail'] }
+                { label: 'Vodka', items: [
+                    { name: 'Lychee Martini', ing: 'vodka, lychee, triple sec' },
+                    { name: 'Lemon Drop Martini', ing: 'vodka, lemon, triple sec' },
+                    { name: 'Cosmo', ing: 'vodka, cranberry, triple sec, lime' },
+                    { name: 'Sea Breeze', ing: 'vodka, cranberry, grapefruit' },
+                    { name: 'White Russian', sub: 'dairy', ing: 'vodka, coffee liqueur, cream' },
+                    { name: 'Mocha Russian', sub: 'dairy', ing: 'vodka, coffee liqueur, chocolate, cream' },
+                    { name: 'Moscow Mule', ing: 'vodka, lime, ginger beer' },
+                    { name: 'Date in Moscow', ing: 'vodka, date syrup, lime, ginger beer' },
+                    { name: 'Hibiscus Mule', ing: 'vodka, hibiscus, lime, ginger beer' }] },
+                { label: 'Rum', items: [
+                    { name: 'Hurricane', ing: 'rum, passionfruit, orange, grenadine' },
+                    { name: 'Mojito', ing: 'rum, mint, lime, soda' },
+                    { name: 'Passionfruit Mojito', ing: 'rum, passionfruit, mint, lime' },
+                    { name: 'Daiquiri', ing: 'rum, lime, sugar' },
+                    { name: 'Hibiscus Daiquiri', ing: 'rum, hibiscus, lime' },
+                    { name: 'Passionfruit Daiquiri', ing: 'rum, passionfruit, lime' },
+                    { name: 'Mai Tai', ing: 'rum, orange liqueur, lime, orgeat' },
+                    { name: 'Rum Old Fashioned', ing: 'aged rum, sugar, bitters' },
+                    { name: "Dark 'n Stormy", ing: 'dark rum, ginger beer, lime' },
+                    { name: 'Pina Colada', ing: 'rum, pineapple, coconut cream' },
+                    { name: 'Baja Peach', ing: 'rum, peach, poblano, lime' }] },
+                { label: 'Gin', items: [
+                    { name: 'Gin Gin Mule', ing: 'gin, mint, lime, ginger beer' },
+                    { name: 'Gimlet', ing: 'gin, lime, sugar' },
+                    { name: 'Bramble', ing: 'gin, lemon, blackberry' },
+                    { name: 'Gin Pesto', ing: 'gin, basil, lemon' },
+                    { name: 'Clover Club', ing: 'gin, raspberry, lemon, silky foam' },
+                    { name: 'Bees Knees', ing: 'gin, honey, lemon' },
+                    { name: 'French 75', ing: 'gin, lemon, sugar, prosecco' },
+                    { name: 'Cucumber Gin and Tonic', ing: 'gin, cucumber, tonic' },
+                    { name: 'The Elderly Flower', ing: 'gin, elderflower tonic, lime' }] },
+                { label: 'Tequila', items: [
+                    { name: 'Palomita', ing: 'tequila, grapefruit, lime, soda' },
+                    { name: 'Margarita', sub: 'spicy optional', ing: 'tequila, lime' },
+                    { name: 'Mango Margarita', sub: 'spicy optional', ing: 'tequila, mango, lime' },
+                    { name: 'Passionfruit Margarita', sub: 'spicy optional', ing: 'tequila, passionfruit, lime' },
+                    { name: 'Oaxacan Old Fashioned', ing: 'tequila, mezcal, agave, bitters' }] },
+                { label: 'Whiskey', items: [
+                    { name: 'Maple Whiskey Sour', ing: 'whiskey, lemon, maple' },
+                    { name: 'New York Sour', ing: 'whiskey, lemon, red wine float' },
+                    { name: 'Gold Rush', ing: 'bourbon, honey, lemon' },
+                    { name: 'Old Fashioned', ing: 'whiskey, sugar, bitters' },
+                    { name: 'Penicillin', ing: 'scotch, honey, ginger, lemon' },
+                    { name: 'Brown Derby', ing: 'bourbon, grapefruit, honey' },
+                    { name: 'Smoked Old Fashioned', ing: 'whiskey, bitters, real wood smoke' },
+                    { name: 'Whiskey Peach Smash', ing: 'whiskey, peach, mint, lemon' },
+                    { name: 'Amaretto Sour', ing: 'amaretto, lemon, silky foam' }] },
+                { label: 'Arak', items: [
+                    { name: 'Casablanca Mule', ing: 'arak, mint, lime, ginger beer' },
+                    { name: 'Licorice Stick', ing: 'arak, lemon, sugar' },
+                    { name: 'Eshkolit', ing: 'arak, grapefruit, lime' }] }
             ];
-            var MOCKTAILS = ['Shirley Temple', 'Mango Peach Gingerada', 'Hibiscus Limonada', 'Lychee No-tini'];
+            var MOCKTAILS = [
+                { name: 'Shirley Temple', ing: 'ginger ale, grenadine, cherry' },
+                { name: 'Mango Peach Gingerada', ing: 'mango, peach, orange, ginger, lime' },
+                { name: 'Hibiscus Limonada', ing: 'hibiscus, fresh lemon, soda' },
+                { name: 'Lychee No-tini', ing: 'lychee, lime, zero proof' }];
 
             var token = new URLSearchParams(location.search).get('t') || '';
             var pkg = null;                    // '4-1' | '3-2'
@@ -139,13 +196,29 @@
 
             function chipRow(kind, items) {
                 var row = document.createElement('div');
-                row.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;';
-                items.forEach(function (name) {
+                row.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;';
+                items.forEach(function (item) {
+                    var name = typeof item === 'string' ? item : item.name;
                     var on = picked[kind].indexOf(name) >= 0;
                     var b = document.createElement('button');
                     b.type = 'button';
-                    b.className = 'wl-chip' + (on ? ' on' : '');
-                    b.textContent = (on ? '✓ ' : '+ ') + name;
+                    b.className = 'mb-drink' + (on ? ' on' : '');
+                    var top = document.createElement('span');
+                    top.className = 'mb-name';
+                    top.textContent = (on ? '✓ ' : '+ ') + name;
+                    if (item.sub) {
+                        var sub = document.createElement('span');
+                        sub.className = 'mb-sub';
+                        sub.textContent = ' (' + item.sub + ')';
+                        top.appendChild(sub);
+                    }
+                    b.appendChild(top);
+                    if (item.ing) {
+                        var ing = document.createElement('span');
+                        ing.className = 'mb-ing';
+                        ing.textContent = item.ing;
+                        b.appendChild(ing);
+                    }
                     b.addEventListener('click', function () { toggle(kind, name); });
                     row.appendChild(b);
                 });
@@ -266,9 +339,11 @@
                         picked.c = (info.selection.cocktails || []).slice();
                         picked.m = (info.selection.mocktails || []).slice();
                         var known = {};
-                        COCKTAIL_GROUPS.forEach(function (g) { g.items.forEach(function (n) { known[n] = 1; }); });
+                        COCKTAIL_GROUPS.forEach(function (g) { g.items.forEach(function (it) { known[it.name] = 1; }); });
+                        var knownM = {};
+                        MOCKTAILS.forEach(function (it) { knownM[it.name] = 1; });
                         customs.c = picked.c.filter(function (n) { return !known[n]; });
-                        customs.m = picked.m.filter(function (n) { return MOCKTAILS.indexOf(n) < 0; });
+                        customs.m = picked.m.filter(function (n) { return !knownM[n]; });
                     }
                     elBuilder.style.display = '';
                     render();
